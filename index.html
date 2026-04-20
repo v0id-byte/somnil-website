@@ -427,9 +427,11 @@ nav {
 .fail-err { color: #ff3333; }
 .fail-msg { color: var(--text-muted); }
 
-/* ===================== PAGE 003 — SOLUTION ===================== */
+/* ===================== PAGE 003 — SOLUTION (过渡区) ===================== */
 #page003 {
   background: linear-gradient(180deg, var(--bg) 0%, var(--night) 100%);
+  --accent: var(--night-accent);
+  --accent-glow: rgba(74, 158, 255, 0.3);
 }
 
 .somnil-visual {
@@ -516,9 +518,11 @@ nav {
   line-height: 1.6;
 }
 
-/* ===================== PAGE 004 — TECH ===================== */
+/* ===================== PAGE 004 — TECH (宁静区) ===================== */
 #page004 {
-  background: var(--bg-subtle);
+  background: var(--night);
+  --accent: var(--night-accent);
+  --accent-glow: rgba(74, 158, 255, 0.3);
 }
 
 .eeg-display {
@@ -617,10 +621,12 @@ nav {
 .passive-note.visible { opacity: 1; }
 .passive-note::before { content: '// '; color: var(--accent); }
 
-/* ===================== PAGE 005 — CTA ===================== */
+/* ===================== PAGE 005 — CTA (最终转化区) ===================== */
 #page005 {
-  background: var(--bg);
+  background: var(--night);
   text-align: center;
+  --accent: var(--night-accent);
+  --accent-glow: rgba(74, 158, 255, 0.3);
 }
 
 .cta-title {
@@ -720,10 +726,11 @@ nav {
 .cta-terminal .prompt { color: var(--accent); }
 .cta-terminal .ok { color: #33ff88; }
 
-/* ===================== FOOTER ===================== */
+/* ===================== FOOTER (深夜蓝融入) ===================== */
 footer {
+  background: var(--night);
   padding: 40px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
