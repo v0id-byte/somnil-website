@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOMNIL — 床头睡眠环境被动干预</title>
+<meta name="description" content="Somnil — 床头睡眠环境被动干预设备。EEG 实时监测焦虑发作，自动调节温/声/香。限量体验申请中。">
+<meta name="keywords" content="睡眠监测,焦虑惊醒,EEG,睡眠追踪,床头设备,失眠解决方案">
+<meta property="og:title" content="Somnil — 重新定义睡眠">
+<meta property="og:description" content="半夜惊醒不是你的问题。Somnil 在你意识到之前，把环境调到对的状态。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://somnil.top">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://somnil.top">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000000;
+  --bg-subtle: #0a0a0a;
+  --text: #ffffff;
+  --text-muted: #666666;
+  --text-dim: #333333;
+  --accent: #FF4500;
+  --accent-glow: rgba(255, 69, 0, 0.3);
+  --border: #1a1a1a;
+  --night: #0a1628;       /* 新增：深夜蓝 */
+  --night-accent: #4a9eff; /* 新增：夜空蓝 */
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===================== LOADING SCREEN ===================== */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.loading-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.loading-percent {
+  font-family: var(--font-mono);
+  font-size: clamp(60px, 12vw, 120px);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -2px;
+  text-shadow: 0 0 60px var(--accent-glow);
+}
+.loading-bar-wrap {
+  width: min(400px, 80vw);
+  height: 2px;
+  background: var(--border);
+  margin-top: 32px;
+  overflow: hidden;
+}
+.loading-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  box-shadow: 0 0 10px var(--accent);
+}
+.loading-status {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 20px;
+  letter-spacing: 1px;
+}
+.loading-url {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 40px;
+  letter-spacing: 1px;
+  opacity: 0.4;
+}
+
+/* ===================== NAV ===================== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+  backdrop-filter: blur(4px);
+}
+.nav-logo {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--text);
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ===================== SECTIONS ===================== */
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 40px 80px;
+  position: relative;
+}
+.page-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+.page-label.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.page-label span { color: var(--accent); }
+
+/* ===================== HERO ===================== */
+#hero {
+  text-align: center;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.2s;
+}
+.hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
+
+.hero-title {
+  font-family: var(--font-sans);
+  font-size: clamp(48px, 10vw, 100px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.4s;
+}
+.hero-title.visible { opacity: 1; transform: translateY(0); }
+
+.hero-title .accent { color: var(--accent); }
+
+.hero-sub {
+  font-size: clamp(14px, 2vw, 18px);
+  color: var(--text-muted);
+  font-weight: 300;
+  letter-spacing: 1px;
+  line-height: 1.6;
+  max-width: 480px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.6s;
+}
+.hero-sub.visible { opacity: 1; transform: translateY(0); }
+
+.hero-terminal {
+  margin-top: 60px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.8s;
+}
+.hero-terminal.visible { opacity: 1; transform: translateY(0); }
+.hero-terminal .cmd { color: var(--accent); }
+.hero-terminal .line { margin: 4px 0; }
+.hero-terminal .prompt { color: var(--text-muted); }
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.8s ease 1.2s;
+}
+.hero-scroll-hint.visible { opacity: 1; }
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+.scroll-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+/* ===================== PAGE 001 — PROBLEM ===================== */
+#page001 {
+  background: var(--bg);
+}
+.page-header {
+  font-family: var(--font-mono);
+  font-size: clamp(32px, 6vw, 60px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease 0.2s;
+}
+.page-header.visible { opacity: 1; transform: translateY(0); }
+
+.page-desc {
+  font-size: clamp(14px, 2vw, 18px);
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.8;
+  max-width: 560px;
+  text-align: center;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.4s;
+}
+.page-desc.visible { opacity: 1; transform: translateY(0); }
+
+.story-card {
+  border: 1px solid var(--border);
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease 0.6s;
+}
+.story-card.visible { opacity: 1; transform: translateY(0); }
+.story-card::before {
+  content: '// SOMNIL::SLEEP_ANXIETY_DETECTED';
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--bg);
+  padding: 0 8px;
+}
+.card-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+.card-headline {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 16px;
+}
+.card-body {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.card-stats {
+  display: flex;
+  gap: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--accent);
+  font-weight: 700;
+}
+.stat-unit {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ===================== PAGE 002 — EXISTING SOLUTIONS FAIL ===================== */
+#page002 { background: var(--bg-subtle); }
+
+.solution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.3s;
+}
+.solution-grid.visible { opacity: 1; transform: translateY(0); }
+.solution-item {
+  padding: 32px 28px;
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+  transition: background 0.3s ease;
+}
+.solution-item:last-child { border-right: none; }
+.solution-item:hover { background: #0f0f0f; }
+.sol-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid;
+}
+.sol-fail { color: #ff3333; border-color: #ff3333; }
+.sol-ok { color: #33ff88; border-color: #33ff88; }
+.sol-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.sol-verdict {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.fail-terminal {
+  margin-top: 40px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  width: 100%;
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.6s;
+}
+.fail-terminal.visible { opacity: 1; transform: translateY(0); }
+.fail-line {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+}
+.fail-num { color: var(--text-dim); min-width: 30px; }
+.fail-ok { color: #33ff88; }
+.fail-err { color: #ff3333; }
+.fail-msg { color: var(--text-muted); }
+
+/* ===================== PAGE 003 — SOLUTION ===================== */
+#page003 {
+  background: var(--bg);
+}
+
+.somnil-visual {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.3s;
+}
+.somnil-visual.visible { opacity: 1; transform: translateY(0); }
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ring-1 { width: 280px; height: 280px; animation: ringPulse 4s ease infinite; }
+.ring-2 { width: 200px; height: 200px; border-color: var(--accent); opacity: 0.3; animation: ringPulse 4s ease infinite 0.5s; }
+.ring-3 { width: 120px; height: 120px; animation: ringPulse 4s ease infinite 1s; }
+.ring-4 { width: 60px; height: 60px; background: var(--accent); opacity: 0.15; }
+@keyframes ringPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; }
+}
+.ring-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+.ring-label.top { top: -30px; left: 50%; transform: translateX(-50%); }
+.ring-label.right { right: -60px; top: 50%; transform: translateY(-50%); }
+.ring-label.bottom { bottom: -30px; left: 50%; transform: translateX(-50%); }
+.ring-label.left { left: -60px; top: 50%; transform: translateY(-50%); }
+
+.somnil-features {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.5s;
+}
+.somnil-features.visible { opacity: 1; transform: translateY(0); }
+.feature-col {
+  flex: 1;
+  padding: 32px 24px;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  text-align: center;
+  transition: border-color 0.3s ease;
+}
+.feature-col:hover { border-color: var(--accent); }
+.feature-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+.feature-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.feature-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ===================== PAGE 004 — TECH ===================== */
+#page004 {
+  background: var(--bg-subtle);
+}
+
+.eeg-display {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.2s;
+}
+.eeg-display.visible { opacity: 1; transform: translateY(0); }
+.eeg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  background: #111;
+}
+.eeg-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+.eeg-dots { display: flex; gap: 6px; }
+.eeg-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+}
+.eeg-dot.active { background: var(--accent); }
+.eeg-body {
+  border: 1px solid var(--border);
+  padding: 24px;
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 2;
+}
+.eeg-line { color: var(--text-muted); }
+.eeg-key { color: var(--text); }
+.eeg-val { color: var(--accent); }
+.eeg-comment { color: var(--text-dim); }
+
+.waveform {
+  height: 80px;
+  width: 100%;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.waveform canvas { width: 100%; height: 100%; }
+
+.tech-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  width: 100%;
+  max-width: 700px;
+  border: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.4s;
+}
+.tech-specs.visible { opacity: 1; transform: translateY(0); }
+.spec-item {
+  padding: 24px 20px;
+  background: var(--bg);
+  text-align: center;
+}
+.spec-value {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.spec-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+.passive-note {
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.7s;
+}
+.passive-note.visible { opacity: 1; }
+.passive-note::before { content: '// '; color: var(--accent); }
+
+/* ===================== PAGE 005 — CTA ===================== */
+#page005 {
+  background: var(--bg);
+  text-align: center;
+}
+
+.cta-title {
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.2s;
+}
+.cta-title.visible { opacity: 1; transform: translateY(0); }
+.cta-title .accent { color: var(--accent); }
+
+.cta-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.4s;
+}
+.cta-sub.visible { opacity: 1; transform: translateY(0); }
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.6s;
+}
+.cta-buttons.visible { opacity: 1; transform: translateY(0); }
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 14px 32px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+.btn-primary:hover {
+  background: transparent;
+  color: var(--accent);
+  box-shadow: 0 0 30px var(--accent-glow);
+  transform: translateY(-2px);
+}
+.cta-main-btn {
+  font-size: 13px !important;
+  padding: 16px 40px !important;
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 40px rgba(255, 69, 0, 0.4) !important;
+  animation: ctaPulse 2s ease-in-out infinite;
+}
+.cta-main-btn:hover {
+  background: var(--accent) !important;
+  box-shadow: 0 0 60px rgba(255, 69, 0, 0.6) !important;
+}
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(255, 69, 0, 0.4); }
+  50% { box-shadow: 0 0 60px rgba(255, 69, 0, 0.7); }
+}
+.btn-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.btn-secondary:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+.cta-terminal {
+  margin-top: 60px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  width: 100%;
+  max-width: 500px;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.9s;
+}
+.cta-terminal.visible { opacity: 1; }
+.cta-terminal-line { margin: 4px 0; }
+.cta-terminal .prompt { color: var(--accent); }
+.cta-terminal .ok { color: #33ff88; }
+
+/* ===================== FOOTER ===================== */
+footer {
+  padding: 40px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-left {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+.footer-right {
+  display: flex;
+  gap: 24px;
+}
+.footer-right a {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+.footer-right a:hover { color: var(--accent); }
+
+/* ===================== DIVIDERS ===================== */
+.page-divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ===================== SCROLL ANIMATIONS ===================== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================== COUNTER ANIMATION ===================== */
+.counter { font-variant-numeric: tabular-nums; }
+
+/* ===================== MOBILE ===================== */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links {
+    display: flex;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    padding: 20px;
+    gap: 16px;
+  }
+  .nav-links a {
+    font-size: 14px;
+    color: #fff;
+  }
+  .section { padding: 100px 20px 60px; }
+  .hero-terminal, .fail-terminal { display: none; }
+  .somnil-features { flex-direction: column; }
+  .solution-grid { grid-template-columns: 1fr 1fr; }
+  .solution-item { padding: 20px 16px; }
+  .solution-item:nth-child(2) { border-right: none; }
+  footer { flex-direction: column; align-items: flex-start; }
+  .card-stats { flex-direction: column; gap: 16px; }
+  .tech-specs { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOADING SCREEN ===================== -->
+<div id="loading-screen">
+  <div class="loading-label">INITIALIZING SLEEP ENVIRONMENT</div>
+  <div class="loading-percent" id="loading-percent">0%</div>
+  <div class="loading-bar-wrap">
+    <div class="loading-bar-fill" id="loading-bar"></div>
+  </div>
+  <div class="loading-status" id="loading-status">正在进入睡眠状态...</div>
+  <div class="loading-url">HTTPS://SOMNIL.TOP/SESSION/INIT/2026</div>
+</div>
+
+<!-- ===================== NAV ===================== -->
+<nav>
+  <div class="nav-logo">SOMNIL</div>
+  <ul class="nav-links">
+    <li><a href="#page001">问题</a></li>
+    <li><a href="#page002">现状</a></li>
+    <li><a href="#page003">方案</a></li>
+    <li><a href="#page004">技术</a></li>
+    <li><a href="#page005">预约</a></li>
+  </ul>
+</nav>
+
+<!-- ===================== PAGE 001 — HERO / PROBLEM ===================== -->
+<section id="hero" class="section">
+  <div class="page-label" data-animate>PAGE <span>001</span> / SOMNIL</div>
+
+  <div class="hero-eyebrow" data-animate>床头睡眠环境被动干预</div>
+  <h1 class="hero-title" data-animate>Somnil</h1>
+  <p class="hero-sub" data-animate>半夜惊醒，不是你的问题。<br>是环境没跟上你的大脑。</p>
+
+  <div class="hero-terminal" data-animate>
+    <div class="line"><span class="prompt">$</span> curl -X POST <span class="cmd">https://api.somnil.top/detect</span></div>
+    <div class="line" style="margin-top:8px"><span class="prompt">></span> { status: <span class="cmd">"anxiety_detected"</span>, intervention: <span class="cmd">"warming"</span> }</div>
+    <div class="line" style="margin-top:8px"><span class="prompt">></span> { session_id: <span class="cmd">"SNS-2026-0419-0312"</span>, beta_theta: <span class="cmd">2.7</span> }</div>
+  </div>
+
+  <div class="hero-scroll-hint" data-animate>
+    <div class="scroll-line"></div>
+    <div class="scroll-text">SCROLL</div>
+  </div>
+</section>
+
+<hr class="page-divider">
+
+<!-- ===================== PAGE 001 — PROBLEM ===================== -->
+<section id="page001" class="section">
+  <div class="page-label" data-animate>PAGE <span>001</span> / SOMNIL</div>
+
+  <h2 class="page-header" data-animate>半夜惊醒，<br>发生了什么？</h2>
+  <p class="page-desc" data-animate>
+    凌晨 3:17，脑电波突然从 δ 波跳到 β 波。<br>
+    焦虑发作。心跳加速。清醒意识回来。<br>
+    室温太高？噪音太响？床垫不对？<br>
+    你不知道。你只知道——今晚又毁了。
+  </p>
+
+  <div class="story-card" data-animate>
+    <div class="card-time">2026-04-19 // 03:17:42 UTC+8</div>
+    <div class="card-headline">焦虑黎明效应再次触发</div>
+    <div class="card-body">
+      β/θ 脑电比值升至 2.7（正常睡眠阈值 0.8）。<br>
+      核心体温偏高 +1.2°C。环境香气余量不足。<br>
+      系统未能及时干预，用户被迫进入清醒状态。
+    </div>
+    <div class="card-stats">
+      <div class="stat-item">
+        <span class="stat-label">β/θ 比值</span>
+        <span class="stat-value counter" data-target="2.7" data-decimal="1">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">体温异常</span>
+        <span class="stat-value">+<span class="counter" data-target="1.2" data-decimal="1">0</span><span class="stat-unit">°C</span></span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">唤醒时间</span>
+        <span class="stat-value counter" data-target="3" data-decimal="0">0</span>
+        <span class="stat-unit">min</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="page-divider">
+
+<!-- ===================== PAGE 002 — EXISTING SOLUTIONS FAIL ===================== -->
+<section id="page002" class="section">
+  <div class="page-label" data-animate>PAGE <span>002</span> / SOMNIL</div>
+
+  <h2 class="page-header" data-animate>现有方案，<br>为什么失效了？</h2>
+  <p class="page-desc" data-animate>
+    耳塞、白噪音、褪黑素、睡眠追踪器……<br>
+    每一种都在解决一个点。但焦虑是一个系统。
+  </p>
+
+  <div class="solution-grid" data-animate>
+    <div class="solution-item">
+      <div class="sol-badge sol-fail">FAIL</div>
+      <div class="sol-name">耳塞</div>
+      <div class="sol-verdict">屏蔽声音 ≠ 平静神经</div>
+    </div>
+    <div class="solution-item">
+      <div class="sol-badge sol-fail">FAIL</div>
+      <div class="sol-name">白噪音</div>
+      <div class="sol-verdict">背景音 ≠ 抗焦虑</div>
+    </div>
+    <div class="solution-item">
+      <div class="sol-badge sol-fail">FAIL</div>
+      <div class="sol-name">褪黑素</div>
+      <div class="sol-verdict">化学诱导 ≠ 自然节律</div>
+    </div>
+    <div class="solution-item">
+      <div class="sol-badge sol-ok">OK</div>
+      <div class="sol-name">追踪器</div>
+      <div class="sol-verdict">仅观测，不干预</div>
+    </div>
+  </div>
+
+  <div class="fail-terminal" data-animate>
+    <div class="fail-line"><span class="fail-num">001</span><span class="fail-ok">✓</span><span class="fail-msg">sound_masker.exe — exit code 0 — no anxiety relief</span></div>
+    <div class="fail-line"><span class="fail-num">002</span><span class="fail-err">✗</span><span class="fail-msg">melatonin_patch.exe — timeout — dependency conflict</span></div>
+    <div class="fail-line"><span class="fail-num">003</span><span class="fail-ok">✓</span><span class="fail-msg">sleep_tracker.exe — running — passive observation only</span></div>
+    <div class="fail-line"><span class="fail-num">004</span><span class="fail-err">✗</span><span class="fail-msg">all_current_solutions.exe — FAILED: reactive not preventive</span></div>
+  </div>
+</section>
+
+<hr class="page-divider">
+
+<!-- ===================== PAGE 003 — SOMNIL SOLUTION ===================== -->
+<section id="page003" class="section">
+  <div class="page-label" data-animate>PAGE <span>003</span> / SOMNIL</div>
+
+  <h2 class="page-header" data-animate>Somnil<br>怎么做？</h2>
+  <p class="page-desc" data-animate>
+    不是等你已经醒来才补救。<br>
+    而是在你还没意识到之前，就把环境调到对的状态。
+  </p>
+
+  <div class="somnil-visual" data-animate>
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="ring ring-4"></div>
+    <div class="ring-label top">EEG · 250Hz</div>
+    <div class="ring-label right">β/θ</div>
+    <div class="ring-label bottom">FOCUS</div>
+    <div class="ring-label left">RELAX</div>
+  </div>
+
+  <div class="somnil-features" data-animate>
+    <div class="feature-col">
+      <span class="feature-icon">🌡</span>
+      <div class="feature-name">温控</div>
+      <div class="feature-desc">焦虑发作初期<br>自动降低室温 1-2°C<br>配合核心体温下降</div>
+    </div>
+    <div class="feature-col">
+      <span class="feature-icon">🔊</span>
+      <div class="feature-name">声场</div>
+      <div class="feature-desc">检测到清醒脑电后<br>播放 40Hz γ 声脉冲<br>引导神经回归睡眠节律</div>
+    </div>
+    <div class="feature-col">
+      <span class="feature-icon">🌿</span>
+      <div class="feature-name">香气</div>
+      <div class="feature-desc">焦虑触发时<br>释放薰衣草 + 雪松精油<br>触发副交感神经反应</div>
+    </div>
+  </div>
+</section>
+
+<hr class="page-divider">
+
+<!-- ===================== PAGE 004 — TECH ===================== -->
+<section id="page004" class="section">
+  <div class="page-label" data-animate>PAGE <span>004</span> / SOMNIL</div>
+
+  <h2 class="page-header" data-animate>核心技术：<br>EEG 睡眠分析</h2>
+  <p class="page-desc" data-animate>
+    传统睡眠监测只能告诉你"睡得怎么样"。<br>
+    Somnil 告诉你"焦虑什么时候来"，然后提前阻止它。
+  </p>
+
+  <div class="eeg-display" data-animate>
+    <div class="eeg-header">
+      <div class="eeg-title">// EEG REAL-TIME MONITOR</div>
+      <div class="eeg-dots">
+        <div class="eeg-dot active"></div>
+        <div class="eeg-dot"></div>
+        <div class="eeg-dot"></div>
+      </div>
+    </div>
+    <div class="eeg-body">
+      <div class="eeg-line"><span class="eeg-comment">// SESSION</span> <span class="eeg-key">SNS-2026-0419-0312-ALL</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// EEG_SAMPLE_RATE</span> <span class="eeg-val">250 Hz</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// CHANNELS</span> <span class="eeg-val">Fp1, Fp2, F7, F8, T3, T4, O1, O2</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// BAND_POWER_ANALYSIS</span></div>
+      <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">δ (0.5-4 Hz)</span> <span class="eeg-val">34.2 μV²</span> <span class="eeg-comment">// deep_sleep</span></div>
+      <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">θ (4-8 Hz)</span> <span class="eeg-val">18.7 μV²</span> <span class="eeg-comment">// light_sleep</span></div>
+      <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">α (8-13 Hz)</span> <span class="eeg-val">9.3 μV²</span> <span class="eeg-comment">// relaxed_awake</span></div>
+      <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">β (13-30 Hz)</span> <span class="eeg-val">12.1 μV²</span> <span class="eeg-comment">// anxiety_marker</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// ANXIETY_INDEX</span> <span class="eeg-val" id="anxiety-val">0.68</span> <span class="eeg-comment">// [0=calm, 1=max]</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// INTERVENTION_TRIGGER</span> <span class="eeg-val" id="intervention-val">PENDING</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// SYSTEM_STATUS</span> <span class="eeg-val">ACTIVE</span></div>
+    </div>
+  </div>
+
+  <div class="waveform" data-animate>
+    <canvas id="waveCanvas"></canvas>
+  </div>
+
+  <div class="tech-specs" data-animate>
+    <div class="spec-item">
+      <div class="spec-value counter" data-target="8" data-decimal="0">0</div>
+      <div class="spec-key">EEG CHANNELS</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-value counter" data-target="250" data-decimal="0">0</div>
+      <div class="spec-key">SAMPLE RATE Hz</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-value">&lt;<span class="counter" data-target="50" data-decimal="0">0</span></div>
+      <div class="spec-key">LATENCY ms</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-value counter" data-target="3" data-decimal="0">0</div>
+      <div class="spec-key">INTERVENTION MODES</div>
+    </div>
+  </div>
+
+  <div class="passive-note" data-animate>全流程被动干预 — 无需唤醒，无感调节</div>
+</section>
+
+<hr class="page-divider">
+
+<!-- ===================== PAGE 005 — CTA ===================== -->
+<section id="page005" class="section">
+  <div class="page-label" data-animate>PAGE <span>005</span> / SOMNIL</div>
+
+  <h2 class="cta-title" data-animate>准备好<br><span class="accent">重新入睡</span>了吗？</h2>
+  <p class="cta-sub" data-animate>Somnil V1.0 限量体验计划开放中</p>
+
+  <div style="text-align:center; margin-bottom:32px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);">
+    // SOMNIL_beta_users: <span style="color:var(--accent)">247</span> 位体验者 · // avg_sleep_quality_improvement: <span style="color:var(--accent)">+34%</span>
+  </div>
+
+  <div class="cta-buttons" data-animate>
+    <a href="mailto:support@somnil.top?subject=Somnil体验申请" class="btn btn-primary cta-main-btn">申请体验 <span style="font-size:10px; margin-left:8px; opacity:0.8">限量 100 名</span></a>
+    <a href="mailto:support@somnil.top?subject=Somnil详情咨询" class="btn btn-secondary">了解更多</a>
+  </div>
+
+  <div class="cta-terminal" data-animate>
+    <div class="cta-terminal-line"><span class="prompt">$</span> openssl req -new -key somnil_v1.key -out somnil_v1.csr</div>
+    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Certificate request generated: SOMNIL-ACCESS-2026-Q2</div>
+    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Priority queue: <span class="ok">ACTIVE</span> — 247 applicants ahead</div>
+    <div class="cta-terminal-line" style="margin-top:8px"><span class="prompt">$</span> <span style="color:var(--text-dim)">_</span></div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-left">
+    © 2026 融谱智能科技（深圳）有限公司<br>
+    MELSPECTRUM TECHNOLOGY (SHENZHEN) CO., LTD.
+  </div>
+  <div class="footer-right">
+    <a href="#">隐私政策</a>
+    <a href="#">使用条款</a>
+    <a href="#">联系我们</a>
+    <a href="#" title="小红书">小红书</a>
+    <a href="#" title="微信公众号">微信公众号</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  // ===================== LOADING ANIMATION =====================
+  const loadingScreen = document.getElementById('loading-screen');
+  const loadingPercent = document.getElementById('loading-percent');
+  const loadingBar = document.getElementById('loading-bar');
+  const loadingStatus = document.getElementById('loading-status');
+  const statusMessages = [
+    '正在进入睡眠状态...',
+    '加载脑电波模型...',
+    '校准环境传感器...',
+    '同步睡眠数据库...',
+    'Somnil 已就绪'
+  ];
+  let progress = 0;
+  let msgIdx = 0;
+
+  function updateLoading() {
+    if (progress < 100) {
+      progress += Math.random() * 2.5 + 0.5;
+      if (progress > 100) progress = 100;
+      loadingPercent.textContent = Math.floor(progress) + '%';
+      loadingBar.style.width = progress + '%';
+      if (progress > (msgIdx + 1) * (100 / (statusMessages.length - 1))) {
+        msgIdx++;
+        loadingStatus.textContent = statusMessages[msgIdx];
+      }
+      setTimeout(updateLoading, 30 + Math.random() * 40);
+    } else {
+      loadingStatus.textContent = 'Somnil 已就绪';
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        initScrollAnimations();
+      }, 400);
+    }
+  }
+  setTimeout(updateLoading, 300);
+
+  // ===================== EEG WAVEFORM =====================
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+  let wavePhase = 0;
+  let anxietyLevel = 0.68;
+
+  function drawWave() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = canvas.offsetWidth * dpr;
+    canvas.height = canvas.offsetHeight * dpr;
+    ctx.scale(dpr, dpr);
+    const w = canvas.offsetWidth;
+    const h = canvas.offsetHeight;
+
+    ctx.clearRect(0, 0, w, h);
+    const amp = 20 + anxietyLevel * 20;
+    const freq = 0.02 + anxietyLevel * 0.03;
+
+    // Grid
+    ctx.strokeStyle = '#111';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < w; x += 20) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+    }
+    for (let y = 0; y < h; y += 20) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    }
+
+    // Wave
+    ctx.beginPath();
+    ctx.strokeStyle = '#FF4500';
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = 'rgba(255, 69, 0, 0.5)';
+    ctx.shadowBlur = 6;
+    for (let x = 0; x < w; x++) {
+      const y = h / 2 + Math.sin(x * freq + wavePhase) * amp + Math.sin(x * freq * 2.3 + wavePhase * 1.7) * (amp * 0.3);
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Center line
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    wavePhase += 0.05 + anxietyLevel * 0.03;
+    requestAnimationFrame(drawWave);
+  }
+  setTimeout(drawWave, 100);
+
+  // Simulate anxiety fluctuation
+  setInterval(() => {
+    anxietyLevel = 0.5 + Math.random() * 0.4;
+    document.getElementById('anxiety-val').textContent = anxietyLevel.toFixed(2);
+    document.getElementById('intervention-val').textContent =
+      anxietyLevel > 0.75 ? 'WARMING' : anxietyLevel > 0.55 ? 'PENDING' : 'STANDBY';
+    document.getElementById('intervention-val').style.color =
+      anxietyLevel > 0.75 ? '#FF4500' : anxietyLevel > 0.55 ? '#FFA500' : '#33ff88';
+  }, 3000);
+
+  // ===================== COUNTER ANIMATION =====================
+  function animateCounters() {
+    document.querySelectorAll('.counter').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const decimal = parseInt(el.dataset.decimal || '0');
+      const duration = 1500;
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        const current = ease * target;
+        el.textContent = current.toFixed(decimal);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  // ===================== SCROLL ANIMATIONS =====================
+  function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+    // Trigger hero elements immediately
+    document.querySelectorAll('#hero [data-animate]').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 500);
+    });
+
+    // Counter animation on visible
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+  }
+
+  // ===================== RESIZE HANDLER =====================
+  window.addEventListener('resize', () => {
+    canvas.width = canvas.offsetWidth * (window.devicePixelRatio || 1);
+    canvas.height = canvas.offsetHeight * (window.devicePixelRatio || 1);
+  });
+})();
+</script>
+</body>
+</html>
