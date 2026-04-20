@@ -150,6 +150,7 @@ nav {
   align-items: center;
   padding: 120px 40px 80px;
   position: relative;
+  scroll-margin-top: 80px;
 }
 .page-label {
   font-family: var(--font-mono);
@@ -528,6 +529,22 @@ nav {
   background: var(--night);
   --accent: var(--night-accent);
   --accent-glow: rgba(74, 158, 255, 0.3);
+  position: relative;
+}
+#page004::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--night-accent), rgba(74, 158, 255, 0.2));
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: scienceBorderGrow 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+@keyframes scienceBorderGrow {
+  to { transform: scaleY(1); }
 }
 
 .eeg-display {
@@ -625,6 +642,39 @@ nav {
 }
 .passive-note.visible { opacity: 1; }
 .passive-note::before { content: '// '; color: var(--accent); }
+
+/* ===================== HARDWARE SAFETY NOTICE (Page 004) ===================== */
+.safety-notice {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 700px;
+  border: 1px solid rgba(51, 255, 136, 0.35);
+  background: rgba(51, 255, 136, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.9s;
+}
+.safety-notice.visible { opacity: 1; transform: translateY(0); }
+.safety-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(51, 255, 136, 0.85);
+  letter-spacing: 0.5px;
+}
+.safety-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 4px rgba(51, 255, 136, 0.5));
+}
 
 /* ===================== PAGE 005 — CTA (最终转化区) ===================== */
 #page005 {
@@ -970,6 +1020,8 @@ footer {
   footer { flex-direction: column; align-items: flex-start; }
   .card-stats { flex-direction: column; gap: 16px; }
   .tech-specs { grid-template-columns: repeat(2, 1fr); }
+  .safety-notice { padding: 16px 20px; }
+  #page004::before { display: none; }
 }
 </style>
 </head>
@@ -1060,6 +1112,50 @@ footer {
 
 <hr class="page-divider">
 
+<!-- ===================== PAGE 002.5 — THE STORY (初心) ===================== -->
+<section id="story-section" class="section" style="background: var(--bg); border-top: 1px solid var(--border); padding: 160px 40px;">
+ <div style="max-width: 800px; width: 100%; margin: 0 auto; position: relative;">
+
+ <!-- 顶目标签，沿用全局的 fade-up -->
+ <div class="page-label fade-up" data-animate style="margin-bottom: 40px;">FOUNDER'S NOTE <span>//</span> 我们的顿悟</div>
+
+ <!-- 专属动效1：深重聚焦 -->
+ <h3 class="quote-reveal" data-animate>
+"我们曾试图让用户戴上脑机手套，<br>主动对抗焦虑。直到我们自己也失眠了。"
+ </h3>
+
+ <!-- 专属动效2、3、4：接力触发的左右叙事布局 -->
+ <div class="story-wrapper" data-animate>
+
+ <!-- 左侧：过去 -->
+ <div class="story-left">
+ <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 20px;">
+ Somnil 的前两代原型（V1.0 振动反馈手套, V2.0 脑波头环）都在尝试一件事：教用户如何在半夜醒来时，通过设备反馈主动调节呼吸，压制 Beta 波。
+ </p>
+ <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8;">
+ 但在长达半年的内测中，我们发现了一个残酷的真相：<strong>当一个人深陷凌晨三点的焦虑漩涡时，哪怕是让他睁开眼、点开一个 App、配合设备深呼吸，都是极其反人性的。</strong>对睡眠的过度"努力"，反而会带来更严重的清醒。
+ </p>
+ </div>
+
+ <!-- 中间：向下生长的顿悟之线 -->
+ <div class="story-divider"></div>
+
+ <!-- 右侧：新生 -->
+ <div class="story-right">
+ <div data-animate style="font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin-bottom: 16px; letter-spacing: 2px;">V3.0 ARCHITECTURE SHIFT</div>
+ <p data-animate style="color: #fff; font-size: 16px; line-height: 1.7; font-weight: 400;">
+ 所以我们推翻了一切代码。<br><br>
+ 决定打造一个隐形的守护者。它不需要你操作，不需要你配合。它只是默默地看着你的脑波，在你快要坠入焦虑深渊的前一刻，用温度，声场和气味，悄悄把你拉回梦境。
+ </p>
+ </div>
+
+ </div>
+
+ </div>
+</section>
+
+<hr class="page-divider">
+
 <!-- ===================== PAGE 002 — EXISTING SOLUTIONS FAIL ===================== -->
 <section id="page002" class="section">
   <div class="page-label" data-animate>PAGE <span>002</span> / SOMNIL</div>
@@ -1101,51 +1197,7 @@ footer {
   </div>
 </section>
 
-<hr class="page-divider">
 
-<!-- ===================== PAGE 002.5 — THE STORY (初心) ===================== -->
-<section id="story-section" class="section" style="background: var(--bg); border-top: 1px solid var(--border); padding: 160px 40px;">
- <div style="max-width: 800px; width: 100%; margin: 0 auto; position: relative;">
-
- <!-- 顶目标签，沿用全局的 fade-up -->
- <div class="page-label fade-up" data-animate style="margin-bottom: 40px;">FOUNDER'S NOTE <span>//</span> 我们的顿悟</div>
-
- <!-- 专属动效1：深重聚焦 -->
- <h3 class="quote-reveal" data-animate>
- "我们曾试图让用户戴上脑机手套，<br>主动对抗焦虑。直到我们自己也失眠了。"
- </h3>
-
- <!-- 专属动效2、3、4：接力触发的左右叙事布局 -->
- <div class="story-wrapper" data-animate>
-
- <!-- 左侧：过去 -->
- <div class="story-left">
- <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 20px;">
- Somnil 的前两代原型（V1.0 振动反馈手套, V2.0 脑波头环）都在尝试一件事：教用户如何在半夜醒来时，通过设备反馈主动调节呼吸，压制 Beta 波。
- </p>
- <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8;">
- 但在长达半年的内测中，我们发现了一个残酷的真相：<strong>当一个人深陷凌晨三点的焦虑漩涡时，哪怕是让他睁开眼、点开一个 App、配合设备深呼吸，都是极其反人性的。</strong>对睡眠的过度"努力"，反而会带来更严重的清醒。
- </p>
- </div>
-
- <!-- 中间：向下生长的顿悟之线 -->
- <div class="story-divider"></div>
-
- <!-- 右侧：新生 -->
- <div class="story-right">
- <div data-animate style="font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin-bottom: 16px; letter-spacing: 2px;">V3.0 ARCHITECTURE SHIFT</div>
- <p data-animate style="color: #fff; font-size: 16px; line-height: 1.7; font-weight: 400;">
- 所以我们推翻了一切代码。<br><br>
- 决定打造一个隐形的守护者。它不需要你操作，不需要你配合。它只是默默地看着你的脑波，在你快要坠入焦虑深渊的前一刻，用温度，声场和气味，悄悄把你拉回梦境。
- </p>
- </div>
-
- </div>
-
- </div>
-</section>
-
-<hr class="page-divider">
 
 <!-- ===================== PAGE 003 — SOMNIL SOLUTION ===================== -->
 <section id="page003" class="section">
@@ -1282,6 +1334,13 @@ footer {
   </div>
 
   <div class="passive-note" data-animate>全流程被动干预 — 无需唤醒，无感调节</div>
+
+  <!-- 硬件安全声明框 -->
+  <div class="safety-notice" data-animate>
+    <div class="safety-item"><span class="safety-icon">⚠</span>Rx Only — 本设备需由医疗专业人员开具处方使用</div>
+    <div class="safety-item"><span class="safety-icon">💻</span>本地计算 — 所有脑电数据均在设备端处理，不上云</div>
+    <div class="safety-item"><span class="safety-icon">📡</span>无辐射 — 采用被动式 EEG 传感，零电磁辐射</div>
+  </div>
 </section>
 
 <hr class="page-divider">
