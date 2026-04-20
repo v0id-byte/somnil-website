@@ -211,6 +211,36 @@ footer {
   .legal-page { padding: 100px 20px 60px; }
   footer { flex-direction: column; align-items: flex-start; }
 }
+
+/* ===================== MOBILE NAV ===================== */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+}
+@media (max-width: 768px) {
+  .nav-hamburger { display: flex; align-items: center; }
+  .nav-links {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.97);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 24px;
+    gap: 20px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-links.open { max-height: 400px; opacity: 1; }
+  .nav-links a { font-size: 14px; color: #fff; }
+}
 </style>
 </head>
 <body>
@@ -318,6 +348,20 @@ footer {
     <a href="https://www.xiaohongshu.com/user/profile/678734a8000000000803f7de" target="_blank" rel="noopener noreferrer">小红书</a>
   </div>
 </footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  }
+});
+</script>
 
 </body>
 </html>
