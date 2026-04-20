@@ -125,10 +125,19 @@ nav {
   letter-spacing: 4px;
   color: var(--text);
 }
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+}
 .nav-links {
   display: flex;
   gap: 32px;
   list-style: none;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 .nav-links a {
   font-family: var(--font-mono);
@@ -140,6 +149,29 @@ nav {
   transition: color 0.3s ease;
 }
 .nav-links a:hover { color: var(--accent); }
+
+.nav-links a:hover { color: var(--accent); }
+
+/* ===================== MOBILE NAV ===================== */
+@media (max-width: 768px) {
+  .nav-hamburger { display: flex; align-items: center; }
+  .nav-links {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.97);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 24px;
+    gap: 20px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+  .nav-links.open { max-height: 400px; opacity: 1; }
+  .nav-links a { font-size: 14px; color: #fff; }
+}
 
 /* ===================== SECTIONS ===================== */
 .section {
@@ -1041,7 +1073,14 @@ footer {
 <!-- ===================== NAV ===================== -->
 <nav>
   <div class="nav-logo">SOMNIL</div>
-  <ul class="nav-links">
+  <button class="nav-hamburger" id="navToggle" aria-label="打开菜单">
+    <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+      <rect width="22" height="2" rx="1" fill="white"/>
+      <rect y="6" width="22" height="2" rx="1" fill="white"/>
+      <rect y="12" width="22" height="2" rx="1" fill="white"/>
+    </svg>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#page001">问题</a></li>
     <li><a href="#page002">现状</a></li>
     <li><a href="#page003">方案</a></li>
@@ -1443,7 +1482,18 @@ footer {
         loadingStatus.textContent = 'Somnil 已就绪';
         setTimeout(() => {
           loadingScreen.classList.add('hidden');
-          initScrollAnimations();
+      
+  // 汉堡菜单切换
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  }
+  
+    initScrollAnimations();
         }, 400);
       }
     }
