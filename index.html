@@ -455,9 +455,9 @@ nav {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.ring-1 { width: 280px; height: 280px; animation: ringPulse 4s ease infinite; }
-.ring-2 { width: 200px; height: 200px; border-color: var(--accent); opacity: 0.3; animation: ringPulse 4s ease infinite 0.5s; }
-.ring-3 { width: 120px; height: 120px; animation: ringPulse 4s ease infinite 1s; }
+.ring-1 { animation: ringPulse 6s ease-in-out infinite; }
+.ring-2 { animation: ringPulse 6s ease-in-out infinite 1.5s; }
+.ring-3 { animation: ringPulse 6s ease-in-out infinite 3s; }
 .ring-4 { width: 60px; height: 60px; background: var(--accent); opacity: 0.15; }
 @keyframes ringPulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
@@ -696,7 +696,7 @@ nav {
   background: var(--accent) !important;
   border-color: var(--accent) !important;
   box-shadow: 0 0 40px rgba(74, 158, 255, 0.4) !important;
-  animation: ctaPulse 2s ease-in-out infinite;
+  animation: ctaPulse 6s ease-in-out infinite;
 }
 .cta-main-btn:hover {
   background: var(--accent) !important;
@@ -775,11 +775,13 @@ footer {
 .fade-up {
   opacity: 0;
   transform: translateY(40px);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: blur(12px);
+  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
 /* ===================== COUNTER ANIMATION ===================== */
@@ -1175,11 +1177,11 @@ footer {
     const loadingBar = document.getElementById('loading-bar');
     const loadingStatus = document.getElementById('loading-status');
     const statusMessages = [
-      '正在进入睡眠状态...',
-      '加载脑电波模型...',
-      '校准环境传感器...',
-      '同步睡眠数据库...',
-      'Somnil 已就绪'
+      '// 建立双通道脑电连接...',
+      '// 提取环境噪音底噪...',
+      '// 测算 LTA 个人睡眠基线...',
+      '// 激活三级抗干扰阵列...',
+      '// SOMNIL 系统已接管'
     ];
     let progress = 0;
     let msgIdx = 0;
@@ -1213,11 +1215,24 @@ footer {
     }
   })();
 
-  // ===================== EEG WAVEFORM =====================
+  // ===================== EEG WAVEFORM (产品逻辑视觉化) =====================
   const canvas = document.getElementById('waveCanvas');
+  if (!canvas) { console.warn('waveCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
   let wavePhase = 0;
-  let anxietyLevel = 0.68;
+  let anxietyLevel = 0.8; // 初始高焦虑
+
+  // 颜色插值函数（从夜空蓝过渡到警戒橙）
+  function lerpColor(a, b, amount) {
+    const ah = parseInt(a.replace(/#/g, ''), 16),
+    ar = ah >> 16, ag = (ah >> 8) & 0xff, ab = ah & 0xff,
+    bh = parseInt(b.replace(/#/g, ''), 16),
+    br = bh >> 16, bg = (bh >> 8) & 0xff, bb = bh & 0xff,
+    rr = ar + amount * (br - ar),
+    rg = ag + amount * (bg - ag),
+    rb = ab + amount * (bb - ab);
+    return '#' + (((1 << 24) + (rr << 16) + (rg << 8) + rb) | 0).toString(16).slice(1);
+  }
 
   function drawWave() {
     const dpr = window.devicePixelRatio || 1;
@@ -1226,56 +1241,55 @@ footer {
     ctx.scale(dpr, dpr);
     const w = canvas.offsetWidth;
     const h = canvas.offsetHeight;
-
     ctx.clearRect(0, 0, w, h);
-    const amp = 20 + anxietyLevel * 20;
-    const freq = 0.02 + anxietyLevel * 0.03;
 
-    // Grid
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < w; x += 20) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
-    }
-    for (let y = 0; y < h; y += 20) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-    }
+    const amp = 15 + anxietyLevel * 30;
+    const freq = 0.015 + anxietyLevel * 0.06;
+    const waveColor = lerpColor('#4a9eff', '#FF4500', anxietyLevel);
 
-    // Wave
+    // 绘制波形
     ctx.beginPath();
-    ctx.strokeStyle = '#FF4500';
-    ctx.lineWidth = 1.5;
-    ctx.shadowColor = 'rgba(255, 69, 0, 0.5)';
-    ctx.shadowBlur = 6;
+    ctx.strokeStyle = waveColor;
+    ctx.lineWidth = 2;
+    ctx.shadowColor = waveColor;
+    ctx.shadowBlur = 8 + anxietyLevel * 10;
+
     for (let x = 0; x < w; x++) {
-      const y = h / 2 + Math.sin(x * freq + wavePhase) * amp + Math.sin(x * freq * 2.3 + wavePhase * 1.7) * (amp * 0.3);
+      const noise = Math.sin(x * freq * 3.5 + wavePhase * 2.1) * (amp * (0.1 + anxietyLevel * 0.4));
+      const y = h / 2 + Math.sin(x * freq + wavePhase) * amp + noise;
       if (x === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
     ctx.stroke();
     ctx.shadowBlur = 0;
-
-    // Center line
-    ctx.strokeStyle = '#1a1a1a';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
-    ctx.setLineDash([]);
-
-    wavePhase += 0.05 + anxietyLevel * 0.03;
+    wavePhase += 0.03 + anxietyLevel * 0.08;
     requestAnimationFrame(drawWave);
   }
   setTimeout(drawWave, 100);
 
-  // Simulate anxiety fluctuation
+  // 干预模拟：每 10 秒发生一次"焦虑 -> 平复"
   setInterval(() => {
-    anxietyLevel = 0.5 + Math.random() * 0.4;
-    document.getElementById('anxiety-val').textContent = anxietyLevel.toFixed(2);
-    document.getElementById('intervention-val').textContent =
-      anxietyLevel > 0.75 ? 'WARMING' : anxietyLevel > 0.55 ? 'PENDING' : 'STANDBY';
-    document.getElementById('intervention-val').style.color =
-      anxietyLevel > 0.75 ? '#FF4500' : anxietyLevel > 0.55 ? '#FFA500' : '#33ff88';
-  }, 3000);
+    anxietyLevel = 0.85 + Math.random() * 0.15;
+    const calmDown = setInterval(() => {
+      anxietyLevel -= 0.02;
+      if(anxietyLevel <= 0.15) {
+        clearInterval(calmDown);
+        anxietyLevel = 0.15;
+      }
+    }, 100);
+  }, 10000);
+
+  // 更新 EEG 显示数值
+  function updateEEGDisplay() {
+    const anxietyVal = document.getElementById('anxiety-val');
+    const interventionVal = document.getElementById('intervention-val');
+    if (anxietyVal) anxietyVal.textContent = anxietyLevel.toFixed(2);
+    if (interventionVal) {
+      interventionVal.textContent = anxietyLevel > 0.75 ? 'ACTIVE' : anxietyLevel > 0.55 ? 'PENDING' : 'STANDBY';
+      interventionVal.style.color = anxietyLevel > 0.75 ? '#FF4500' : anxietyLevel > 0.55 ? '#FFA500' : '#33ff88';
+    }
+  }
+  setInterval(updateEEGDisplay, 500);
 
   // ===================== COUNTER ANIMATION =====================
   function animateCounters() {
