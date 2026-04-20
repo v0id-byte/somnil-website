@@ -429,7 +429,7 @@ nav {
 
 /* ===================== PAGE 003 — SOLUTION ===================== */
 #page003 {
-  background: var(--bg);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--night) 100%);
 }
 
 .somnil-visual {
@@ -488,7 +488,7 @@ nav {
   text-align: center;
   transition: border-color 0.3s ease;
 }
-.feature-col:hover { border-color: var(--accent); }
+.feature-col:hover { border-color: var(--night-accent); }
 .feature-icon {
   width: 48px;
   height: 48px;
@@ -837,9 +837,9 @@ footer {
   <p class="hero-sub" data-animate>半夜惊醒，不是你的问题。<br>是环境没跟上你的大脑。</p>
 
   <div class="hero-terminal" data-animate>
-    <div class="line"><span class="prompt">$</span> curl -X POST <span class="cmd">https://api.somnil.top/detect</span></div>
-    <div class="line" style="margin-top:8px"><span class="prompt">></span> { status: <span class="cmd">"anxiety_detected"</span>, intervention: <span class="cmd">"warming"</span> }</div>
-    <div class="line" style="margin-top:8px"><span class="prompt">></span> { session_id: <span class="cmd">"SNS-2026-0419-0312"</span>, beta_theta: <span class="cmd">2.7</span> }</div>
+    <div class="line"><span class="prompt">$</span> curl -X POST <span class="cmd">https://api.somnil.top/v1/detect</span></div>
+    <div class="line" style="margin-top:8px"><span class="prompt">></span> {"status": <span class="cmd">"anxiety_surge_detected"</span>, "beta_ratio": <span class="cmd">1.85</span>}</div>
+    <div class="line" style="margin-top:8px"><span class="prompt">></span> {"action": <span class="cmd">"trigger_pink_noise"</span>, "confidence": <span class="cmd">0.94</span>}</div>
   </div>
 
   <div class="hero-scroll-hint" data-animate>
@@ -952,6 +952,14 @@ footer {
     <div class="ring-label right">β/θ</div>
     <div class="ring-label bottom">FOCUS</div>
     <div class="ring-label left">RELAX</div>
+    <!-- Product Silhouette -->
+    <svg class="device-silhouette" viewBox="0 0 100 100" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;opacity:0.25;pointer-events:none;">
+      <ellipse cx="50" cy="30" rx="28" ry="22" fill="none" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
+      <ellipse cx="50" cy="30" rx="18" ry="14" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--night-accent);opacity:0.5"/>
+      <rect x="42" y="55" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
+      <line x1="50" y1="52" x2="50" y2="55" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
+      <circle cx="50" cy="30" r="4" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--night-accent)"/>
+    </svg>
   </div>
 
   <div class="somnil-features" data-animate>
@@ -1106,40 +1114,49 @@ footer {
 <script>
 (function() {
   // ===================== LOADING ANIMATION =====================
-  const loadingScreen = document.getElementById('loading-screen');
-  const loadingPercent = document.getElementById('loading-percent');
-  const loadingBar = document.getElementById('loading-bar');
-  const loadingStatus = document.getElementById('loading-status');
-  const statusMessages = [
-    '正在进入睡眠状态...',
-    '加载脑电波模型...',
-    '校准环境传感器...',
-    '同步睡眠数据库...',
-    'Somnil 已就绪'
-  ];
-  let progress = 0;
-  let msgIdx = 0;
+  (function() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingPercent = document.getElementById('loading-percent');
+    const loadingBar = document.getElementById('loading-bar');
+    const loadingStatus = document.getElementById('loading-status');
+    const statusMessages = [
+      '正在进入睡眠状态...',
+      '加载脑电波模型...',
+      '校准环境传感器...',
+      '同步睡眠数据库...',
+      'Somnil 已就绪'
+    ];
+    let progress = 0;
+    let msgIdx = 0;
 
-  function updateLoading() {
-    if (progress < 100) {
-      progress += Math.random() * 2.5 + 0.5;
-      if (progress > 100) progress = 100;
-      loadingPercent.textContent = Math.floor(progress) + '%';
-      loadingBar.style.width = progress + '%';
-      if (progress > (msgIdx + 1) * (100 / (statusMessages.length - 1))) {
-        msgIdx++;
-        loadingStatus.textContent = statusMessages[msgIdx];
+    function updateLoading() {
+      if (progress < 100) {
+        progress += Math.random() * 2.5 + 0.5;
+        if (progress > 100) progress = 100;
+        loadingPercent.textContent = Math.floor(progress) + '%';
+        loadingBar.style.width = progress + '%';
+        if (progress > (msgIdx + 1) * (100 / (statusMessages.length - 1))) {
+          msgIdx++;
+          loadingStatus.textContent = statusMessages[msgIdx];
+        }
+        setTimeout(updateLoading, 30 + Math.random() * 40);
+      } else {
+        loadingStatus.textContent = 'Somnil 已就绪';
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+          initScrollAnimations();
+        }, 400);
       }
-      setTimeout(updateLoading, 30 + Math.random() * 40);
-    } else {
-      loadingStatus.textContent = 'Somnil 已就绪';
-      setTimeout(() => {
-        loadingScreen.classList.add('hidden');
-        initScrollAnimations();
-      }, 400);
     }
-  }
-  setTimeout(updateLoading, 300);
+
+    if (!sessionStorage.getItem('somnil_loaded')) {
+      sessionStorage.setItem('somnil_loaded', 'true');
+      setTimeout(updateLoading, 300);
+    } else {
+      loadingScreen.classList.add('hidden');
+      initScrollAnimations();
+    }
+  })();
 
   // ===================== EEG WAVEFORM =====================
   const canvas = document.getElementById('waveCanvas');
