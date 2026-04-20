@@ -794,15 +794,20 @@ footer {
   align-items: center;
   justify-content: center;
   margin: 60px 0;
-  gap: 16px;
+  gap: 24px;
+}
+.os-eyebrow,
+.os-badge-wrapper,
+.os-stats,
+.os-desc {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.os-container.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.os-eyebrow.visible    { opacity: 1; transform: translateY(0); transition-delay: 0.0s; }
+.os-badge-wrapper.visible { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
+.os-stats.visible      { opacity: 1; transform: translateY(0); transition-delay: 0.30s; }
+.os-desc.visible       { opacity: 1; transform: translateY(0); transition-delay: 0.45s; }
 .os-eyebrow {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -1400,6 +1405,11 @@ footer {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          // For os-container, propagate .visible to children for staggered animation
+          if (entry.target.classList.contains('os-container')) {
+            entry.target.querySelectorAll('.os-eyebrow, .os-badge-wrapper, .os-stats, .os-desc')
+              .forEach(child => child.classList.add('visible'));
+          }
           observer.unobserve(entry.target);
         }
       });
