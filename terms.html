@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>使用条款 — SOMNIL</title>
-<meta name="description" content="Somnil 使用条款 — Somnil™ 睡眠焦虑干预设备使用协议。">
+<title>使用条款 — Somnil</title>
+<meta name="description" content="Somnil 使用条款说明。Somnil 是一款床头睡眠环境被动干预设备。">
 <link rel="canonical" href="https://somnil.top/terms.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -25,23 +25,23 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  background: var(--bg);
+  background: var(--night);
   color: var(--text);
   font-family: var(--font-sans);
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
-
-/* ===================== NAV ===================== */
 nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
   backdrop-filter: blur(4px);
 }
 .nav-logo {
@@ -52,6 +52,7 @@ nav {
   color: var(--text);
   text-decoration: none;
 }
+.nav-hamburger { display: none; }
 .nav-links {
   display: flex;
   gap: 32px;
@@ -67,108 +68,68 @@ nav {
   transition: color 0.3s ease;
 }
 .nav-links a:hover { color: var(--accent); }
-
-/* ===================== PAGE CONTENT ===================== */
-.legal-page {
-  min-height: 100vh;
-  padding: 120px 40px 80px;
+.container {
   max-width: 760px;
   margin: 0 auto;
+  padding: 140px 40px 80px;
 }
-.legal-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--accent);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.legal-title {
-  font-size: clamp(36px, 6vw, 60px);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -1px;
-  margin-bottom: 8px;
-}
-.legal-subtitle {
-  font-size: 16px;
-  color: var(--text-muted);
-  font-weight: 300;
-  margin-bottom: 60px;
-  letter-spacing: 1px;
-}
-.legal-divider {
-  width: 60px;
-  height: 2px;
-  background: var(--accent);
-  margin-bottom: 48px;
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-.legal-section {
-  margin-bottom: 48px;
-}
-.legal-section-title {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--night-accent);
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-}
-.legal-section p {
-  font-size: 15px;
-  color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: 16px;
-}
-.legal-section ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 16px;
-}
-.legal-section ul li {
-  font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.7;
-  padding: 6px 0;
-  padding-left: 20px;
-  position: relative;
-}
-.legal-section ul li::before {
-  content: '//';
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
-  position: absolute;
-  left: 0;
-}
-.legal-section strong {
-  color: var(--text);
-  font-weight: 600;
-}
-.legal-section a {
-  color: var(--night-accent);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-.legal-section a:hover { color: var(--accent); }
-.legal-update {
+.page-label {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-dim);
-  margin-top: 64px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 60px;
 }
-.legal-update span { color: var(--accent); }
-
-/* ===================== FOOTER ===================== */
+h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+.last-updated {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 60px;
+}
+.section-block {
+  margin-bottom: 48px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 40px;
+}
+.section-block:first-of-type { border-top: none; padding-top: 0; }
+.section-block h2 {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.section-block p, .section-block li {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-weight: 300;
+}
+.section-block ul { padding-left: 20px; margin-top: 12px; }
+.section-block li { margin-bottom: 8px; }
+.highlight-box {
+  border: 1px solid rgba(51, 255, 136, 0.3);
+  background: rgba(51, 255, 136, 0.05);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(51, 255, 136, 0.85);
+  line-height: 1.7;
+}
 footer {
-  background: var(--night);
+  border-top: 1px solid rgba(255,255,255,0.05);
   padding: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -195,147 +156,76 @@ footer {
   transition: color 0.3s ease;
 }
 .footer-right a:hover { color: var(--accent); }
-
 @media (max-width: 768px) {
   nav { padding: 16px 20px; }
-  .nav-links {
-    display: flex;
-    position: fixed;
-    top: 60px; left: 0; right: 0;
-    background: rgba(0,0,0,0.95);
-    flex-direction: column;
-    padding: 20px;
-    gap: 16px;
-  }
-  .nav-links a { font-size: 14px; color: #fff; }
-  .legal-page { padding: 100px 20px 60px; }
+  .nav-links { display: none; }
+  .container { padding: 100px 20px 60px; }
   footer { flex-direction: column; align-items: flex-start; }
-}
-
-/* ===================== MOBILE NAV ===================== */
-.nav-hamburger {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  margin-left: auto;
-}
-@media (max-width: 768px) {
-  .nav-hamburger { display: flex; align-items: center; }
-  .nav-links {
-    position: fixed;
-    top: 56px;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.97);
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 24px;
-    gap: 20px;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-  }
-  .nav-links.open { max-height: 400px; opacity: 1; }
-  .nav-links a { font-size: 14px; color: #fff; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===================== NAV ===================== -->
 <nav>
   <a href="index.html" class="nav-logo">SOMNIL</a>
+  <button class="nav-hamburger" aria-label="菜单">
+    <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+      <rect width="22" height="2" rx="1" fill="white"/>
+      <rect y="6" width="22" height="2" rx="1" fill="white"/>
+      <rect y="12" width="22" height="2" rx="1" fill="white"/>
+    </svg>
+  </button>
   <ul class="nav-links">
-    <li><a href="index.html#page001">问题</a></li>
-    <li><a href="index.html#page002">现状</a></li>
-    <li><a href="index.html#page003">方案</a></li>
+    <li><a href="index.html">首页</a></li>
     <li><a href="index.html#page004">技术</a></li>
     <li><a href="index.html#page005">预约</a></li>
   </ul>
 </nav>
 
-<!-- ===================== CONTENT ===================== -->
-<div class="legal-page">
-  <div class="legal-eyebrow">// LEGAL</div>
-  <h1 class="legal-title">使用条款</h1>
-  <p class="legal-subtitle">Terms of Service</p>
-  <div class="legal-divider"></div>
+<div class="container">
+  <div class="page-label">// LEGAL</div>
+  <h1>使用条款</h1>
+  <p class="last-updated">最后更新：2026 年 4 月 20 日</p>
 
-  <div class="legal-section">
-    <div class="legal-section-title">一、服务说明</div>
-    <p>Somnil（"本服务"）是由<strong>融谱智能科技（深圳）有限公司</strong>（"公司"）提供的睡眠焦虑被动干预设备及配套软件服务。Somnil 通过 EEG（脑电图）传感器实时监测用户睡眠期间的神经电活动，结合温控、声场和香气三级干预系统，在检测到焦虑发作前兆时自动调节睡眠环境，旨在改善用户睡眠质量。</p>
-    <p>Somnil V1.0 为限量体验版本，公司保留根据市场反馈调整产品功能和服务范围的权利。</p>
+  <div class="section-block">
+    <h2>一、服务说明</h2>
+    <p>Somnil 是一款床头睡眠环境被动干预设备，通过 EEG 传感器实时监测用户睡眠状态，并在检测到焦虑前兆时自动调节环境参数（温度、声场、香气），以辅助用户回归自然睡眠节律。</p>
+    <p>Somnil V1.0 限量体验计划目前处于内测阶段，仅对受邀用户开放。</p>
   </div>
 
-  <div class="legal-section">
-    <div class="legal-section-title">二、使用限制</div>
-    <p>您同意不会也不得授权、帮助或允许任何第三方从事以下行为：</p>
-    <ul>
-      <li>对 Somnil 设备、固件、软件或算法进行反向工程（Reverse Engineering）、反编译（Decompilation）或破解（Disassembly）</li>
-      <li>试图绕过、破解或破坏 Somnil 设备的任何安全机制或数据加密措施</li>
-      <li>复制、修改、分发或公开展示 Somnil 的软件代码、硬件设计或专有算法</li>
-      <li>将 Somnil 设备或软件用于任何非法目的，或在未经授权的情况下商业转售本产品</li>
-      <li>使用非官方认证的第三方配件或修改设备硬件配置</li>
-    </ul>
-    <p>违反上述限制将导致本协议终止，且公司保留依法追究法律责任的权利。</p>
+  <div class="section-block">
+    <h2>二、使用限制</h2>
+    <p>Somnil 设备及配套软件仅供个人非商业用途使用。禁止对本产品进行逆向工程、反编译或任何形式的破解。</p>
+    <p>Somnil 不是医疗器械，不用于诊断、治疗、预防或治愈任何疾病。如您正在经历持续性睡眠障碍或焦虑症，请咨询专业医疗人员。</p>
   </div>
 
-  <div class="legal-section">
-    <div class="legal-section-title">三、免责声明</div>
-    <p><strong>Somnil 不是医疗器械，本服务不构成任何医疗建议、诊断或治疗。</strong></p>
-    <ul>
-      <li>Somnil 设备及服务基于消费电子标准设计，尚未获得国家药品监督管理局（NMPA）医疗器械注册，亦未获得美国 FDA 医疗器械认证</li>
-      <li>Somnil 不能替代专业的医学诊断、治疗或精神科/神经科医疗建议</li>
-      <li>如您正在经历严重的失眠、焦虑障碍、抑郁症或其他心理健康问题，请立即寻求专业医疗人员的帮助</li>
-      <li>公司不对用户因滥用本产品、或将本产品用于非预期用途而造成的任何身体或心理健康损害承担责任</li>
-      <li>公司不对因不可抗力、网络中断、设备固件更新或第三方原因导致的服务中断承担责任</li>
-    </ul>
+  <div class="section-block">
+    <h2>三、体验资格</h2>
+    <p>Sommel V1.0 限量体验计划名额有限（限量 100 名），我们保留对申请人资格进行审核的权利。</p>
+    <p>通过体验计划获得设备的用户，需遵守设备随附的具体体验协议条款。</p>
   </div>
 
-  <div class="legal-section">
-    <div class="legal-section-title">四、知识产权</div>
-    <p>Somnil™ 商标、Logo、图形界面、源代码、算法、硬件设计文档及所有相关知识产权归<strong>融谱智能科技（深圳）有限公司</strong>独家所有。未经公司书面授权，任何个人或实体不得使用、复制或修改上述知识产权。</p>
-    <p>EEG 睡眠分析算法（专利申请中）以及边缘计算固件为公司的核心商业机密，受中华人民共和国《反不正当竞争法》保护。</p>
-    <p>GitHub 开源仓库（<a href="https://github.com/v0id-byte/somnil-eeg" target="_blank" rel="noopener noreferrer">github.com/v0id-byte/somnil-eeg</a>）中的部分辅助工具代码采用开源许可证发布，适用相应许可证条款。</p>
+  <div class="section-block">
+    <h2>四、知识产权</h2>
+    <p>Somnil 设备固件、软件及相关技术文档的知识产权归融谱智能科技（深圳）有限公司所有。</p>
+    <p>Somnil 开放源代码项目（托管于 GitHub）按照其各自的开源许可证条款执行。</p>
   </div>
 
-  <div class="legal-section">
-    <div class="legal-section-title">五、更改权利</div>
-    <p>公司保留随时以下权利：</p>
-    <ul>
-      <li>修改、更新或停止 Somnil 服务的任何功能或组件</li>
-      <li>更改本使用条款的内容，更改将于更新版本发布于网站时生效</li>
-      <li>调整产品定价、订阅计划或服务范围</li>
-      <li>对免费体验用户转为付费订阅模式（将提前30天通知）</li>
-    </ul>
-    <p>如您不同意修改后的条款，您有权停止使用本服务。</p>
+  <div class="section-block">
+    <h2>五、责任限制</h2>
+    <p>Somnil 设备在正常使用条件下运行。因用户自行修改固件、违规操作或不可抗力导致的任何损失，制造商不承担责任。</p>
+    <div class="highlight-box">
+      Somnil 不是医疗设备。Sleep anxiety intervention 不是医学治疗。我们不声称能治愈任何睡眠障碍或精神健康问题。
+    </div>
   </div>
 
-  <div class="legal-section">
-    <div class="legal-section-title">六、适用法律与争议解决</div>
-    <p>本使用条款的订立、执行和解释均适用<strong>中华人民共和国法律</strong>。如因本协议产生任何争议，双方应首先通过友好协商解决；协商不成的，任何一方可向公司注册地有管辖权的人民法院提起诉讼。</p>
-    <p>公司注册地址：广东省深圳市南山区（具体地址以营业执照登记为准）。</p>
-  </div>
-
-  <div class="legal-section">
-    <div class="legal-section-title">七、联系我们</div>
-    <p>如您对本使用条款有任何疑问，请联系我们：</p>
-    <ul>
-      <li><strong>电子邮件：</strong><a href="mailto:somnil@melspectrum.com">somnil@melspectrum.com</a></li>
-      <li><strong>官方网站：</strong>www.somnil.top</li>
-    </ul>
-  </div>
-
-  <div class="legal-update">
-    // 条款更新于 <span>2026年4月20日</span> · 版本 1.0<br>
-    如不同意本条款，请勿使用 Somnil 产品及服务。
+  <div class="section-block">
+    <h2>六、联系</h2>
+    <p>如对本条款有任何疑问，请通过以下方式联系我们：</p>
+    <p style="margin-top:8px; font-family:var(--font-mono); font-size:12px; color:var(--accent);">support@somnil.top</p>
   </div>
 </div>
 
-<!-- ===================== FOOTER ===================== -->
 <footer>
   <div class="footer-left">
     © 2026 融谱智能科技（深圳）有限公司<br>
@@ -344,24 +234,9 @@ footer {
   <div class="footer-right">
     <a href="privacy.html">隐私政策</a>
     <a href="terms.html">使用条款</a>
-    <a href="contact.html">联系我们</a>
-    <a href="https://www.xiaohongshu.com/user/profile/678734a8000000000803f7de" target="_blank" rel="noopener noreferrer">小红书</a>
+    <a href="mailto:support@somnil.top">联系我们</a>
   </div>
 </footer>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
-  }
-});
-</script>
 
 </body>
 </html>

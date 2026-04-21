@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SOMNIL — 床头睡眠环境被动干预</title>
-<meta name="description" content="Somnil — 床头睡眠环境被动干预设备。EEG 实时监测焦虑发作，自动调节温/声/香。限量体验申请中。">
+<meta name="description" content="凌晨半夜惊醒、失眠焦虑睡不着？Somnil 用 EEG 实时监测焦虑发作，在你察觉之前自动调节温度、声场和香气——把睡眠环境调到对的状态，把焦虑化解在还没发作之前。">
 <meta name="keywords" content="睡眠监测,焦虑惊醒,EEG,睡眠追踪,床头设备,失眠解决方案">
 <meta property="og:title" content="Somnil — 重新定义睡眠">
 <meta property="og:description" content="半夜惊醒不是你的问题。Somnil 在你意识到之前，把环境调到对的状态。">
@@ -12,6 +12,19 @@
 <meta property="og:url" content="https://somnil.top">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://somnil.top">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Somnil 是什么？", "acceptedAnswer": {"@type": "Answer", "text": "Somnil 是一款床头睡眠环境被动干预设备，通过 EEG 实时监测脑电波变化，在焦虑发作前兆出现时自动调节温度、声场和香气三重环境参数，帮助神经回归睡眠节律，无需用户任何操作。"}},
+    {"@type": "Question", "name": "Somnil 和睡眠追踪器有什么区别？", "acceptedAnswer": {"@type": "Answer", "text": "传统睡眠追踪器只能告诉你昨晚睡得怎么样，属于被动观测。Somnil 在检测到焦虑前兆时主动干预，在你还清醒之前就把环境调到对的状态，实现预防性调节而非事后补救。"}},
+    {"@type": "Question", "name": "半夜惊醒、失眠焦虑该怎么解决？", "acceptedAnswer": {"@type": "Answer", "text": "半夜惊醒往往与睡眠环境不适相关——室温偏高、噪音干扰、气味缺失。Somnil 通过 EEG 实时监测焦虑发作信号，在 β 波升高早期阶段自动触发温控、粉红噪音和芳香干预，三路协同让神经无需清醒即可重新入睡。"}},
+    {"@type": "Question", "name": "Somnil 怎么做到被动干预，不需要用户操作？", "acceptedAnswer": {"@type": "Answer", "text": "Somnil 放置于床头持续监测脑电波，完全不需要用户配合。当检测到焦虑前兆时，系统自动调节室温、播放助眠声场、释放精油，全程无感，用户无需任何操作，在睡梦中完成睡眠环境调节。"}},
+    {"@type": "Question", "name": "EEG 监测会辐射吗？数据安全吗？", "acceptedAnswer": {"@type": "Answer", "text": "Somnil 采用被动式 EEG 传感，零电磁辐射。数据在本地边缘计算模块完成处理，梦境数据永不上云，不存在隐私泄露风险。"}}
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -488,6 +501,7 @@ nav {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.ring-1, .ring-2, .ring-3 { width: 60px; height: 60px; animation: ringPulse 6s ease-in-out infinite; }
 .ring-1 { animation: ringPulse 6s ease-in-out infinite; }
 .ring-2 { animation: ringPulse 6s ease-in-out infinite 1.5s; }
 .ring-3 { animation: ringPulse 6s ease-in-out infinite 3s; }
@@ -1029,7 +1043,6 @@ footer {
 @media (max-width: 768px) {
   nav { padding: 16px 20px; }
   .nav-links {
-    display: flex;
     position: fixed;
     top: 60px;
     left: 0;
@@ -1038,7 +1051,11 @@ footer {
     flex-direction: column;
     padding: 20px;
     gap: 16px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
   }
+  .nav-links.open { max-height: 400px; opacity: 1; }
   .nav-links a {
     font-size: 14px;
     color: #fff;
@@ -1258,7 +1275,7 @@ footer {
     <div class="ring-label bottom">FOCUS</div>
     <div class="ring-label left">RELAX</div>
     <!-- Product Silhouette -->
-    <svg class="device-silhouette" viewBox="0 0 100 100" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;opacity:0.25;pointer-events:none;">
+    <svg class="device-silhouette" role="img" aria-label="Somnil 床头睡眠环境干预设备轮廓图" viewBox="0 0 100 100" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;opacity:0.25;pointer-events:none;">
       <ellipse cx="50" cy="30" rx="28" ry="22" fill="none" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
       <ellipse cx="50" cy="30" rx="18" ry="14" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--night-accent);opacity:0.5"/>
       <rect x="42" y="55" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
@@ -1269,7 +1286,7 @@ footer {
 
   <div class="somnil-features" data-animate>
     <div class="feature-col">
-      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg aria-label="温控：焦虑发作初期自动降温 1-2°C，配合核心体温下降" class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M24 44V16"/>
         <circle cx="24" cy="10" r="6"/>
         <path d="M24 16a4 4 0 0 1 4 4v8a8 8 0 1 1-8 0v-8a4 4 0 0 1 4-4z" fill="currentColor" opacity="0.2"/>
@@ -1282,7 +1299,7 @@ footer {
       <div class="feature-desc">焦虑发作初期<br>自动降低室温 1-2°C<br>配合核心体温下降</div>
     </div>
     <div class="feature-col">
-      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg aria-label="声场：检测到清醒脑电后播放 40Hz γ 声脉冲引导神经回归睡眠节律" class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="24" cy="24" r="8" fill="currentColor" opacity="0.15"/>
         <circle cx="24" cy="24" r="3"/>
         <path d="M12 24a12 12 0 0 1 12-12"/>
@@ -1298,7 +1315,7 @@ footer {
       <div class="feature-desc">检测到清醒脑电后<br>播放 40Hz γ 声脉冲<br>引导神经回归睡眠节律</div>
     </div>
     <div class="feature-col">
-      <svg class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg aria-label="香气：焦虑触发时释放薰衣草和雪松精油，触发副交感神经反应" class="feature-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M24 44c-6-3-12-9-12-18 0-8 6-12 12-12 6 0 12 4 12 12 0 9-6 15-12 18z" fill="currentColor" opacity="0.15"/>
         <path d="M24 44V20"/>
         <path d="M24 20c-4-4-8-6-12-6 2 4 6 8 12 10"/>
@@ -1423,7 +1440,7 @@ footer {
   <div class="cta-terminal" data-animate>
     <div class="cta-terminal-line"><span class="prompt">$</span> openssl req -new -key somnil_v1.key -out somnil_v1.csr</div>
     <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Certificate request generated: SOMNIL-ACCESS-2026-Q2</div>
-    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Priority queue: <span class="ok">ACTIVE</span> — 247 applicants ahead</div>
+    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> 已加入体验者：<span class="ok">50+</span> 位</div>
     <div class="cta-terminal-line" style="margin-top:8px"><span class="prompt">$</span> <span style="color:var(--text-dim)">_</span></div>
   </div>
 </section>
@@ -1451,6 +1468,16 @@ footer {
 
 <script>
 (function() {
+  // ===================== NAV TOGGLE (always registered, not inside loading callback) =====================
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  }
+
   // ===================== LOADING ANIMATION =====================
   (function() {
     const loadingScreen = document.getElementById('loading-screen');
@@ -1482,18 +1509,7 @@ footer {
         loadingStatus.textContent = 'Somnil 已就绪';
         setTimeout(() => {
           loadingScreen.classList.add('hidden');
-      
-  // 汉堡菜单切换
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
-  }
-  
-    initScrollAnimations();
+          initScrollAnimations();
         }, 400);
       }
     }
