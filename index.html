@@ -335,6 +335,24 @@ nav {
 }
 .page-desc.visible { opacity: 1; transform: translateY(0); }
 
+.product-form-desc {
+  font-size: clamp(13px, 1.6vw, 16px);
+  color: var(--text);
+  font-weight: 400;
+  line-height: 1.7;
+  max-width: 560px;
+  text-align: center;
+  margin: -20px auto 40px;
+  padding: 14px 24px;
+  background: rgba(74, 158, 255, 0.06);
+  border: 1px solid rgba(74, 158, 255, 0.18);
+  border-radius: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.55s;
+}
+.product-form-desc.visible { opacity: 1; transform: translateY(0); }
+
 .story-card {
   border: 1px solid var(--border);
   padding: 40px;
@@ -1265,6 +1283,9 @@ footer {
     不是等你已经醒来才补救。<br>
     而是在你还没意识到之前，就把环境调到对的状态。
   </p>
+  <p class="product-form-desc" data-animate>
+    Somnil 是一款软质头环，佩戴于额头，内嵌 EEG 干电极，睡前戴上，设备自动开始工作，无需操作手机或任何设备。
+  </p>
 
   <div class="somnil-visual" data-animate>
     <div class="ring ring-1"></div>
@@ -1275,13 +1296,20 @@ footer {
     <div class="ring-label right">β/θ</div>
     <div class="ring-label bottom">FOCUS</div>
     <div class="ring-label left">RELAX</div>
-    <!-- Product Silhouette -->
-    <svg class="device-silhouette" role="img" aria-label="Somnil 床头睡眠环境干预设备轮廓图" viewBox="0 0 100 100" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;opacity:0.25;pointer-events:none;">
-      <ellipse cx="50" cy="30" rx="28" ry="22" fill="none" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
-      <ellipse cx="50" cy="30" rx="18" ry="14" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--night-accent);opacity:0.5"/>
-      <rect x="42" y="55" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
-      <line x1="50" y1="52" x2="50" y2="55" stroke="currentColor" stroke-width="0.8" style="color:var(--night-accent)"/>
-      <circle cx="50" cy="30" r="4" fill="none" stroke="currentColor" stroke-width="0.5" style="color:var(--night-accent)"/>
+    <!-- Product Silhouette: Soft Headband -->
+    <svg class="device-silhouette" role="img" aria-label="Somnil 软质头环产品轮廓图" viewBox="0 0 120 80" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;opacity:0.3;pointer-events:none;">
+      <!-- Head outline (side view) -->
+      <ellipse cx="60" cy="40" rx="32" ry="28" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3,2" style="color:var(--night-accent);opacity:0.4"/>
+      <!-- Soft headband arc across forehead -->
+      <path d="M32 32 Q60 8 88 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="color:var(--night-accent)"/>
+      <!-- EEG electrode dots on headband -->
+      <circle cx="42" cy="24" r="2.5" fill="currentColor" style="color:var(--night-accent);opacity:0.8"/>
+      <circle cx="60" cy="17" r="2.5" fill="currentColor" style="color:var(--night-accent);opacity:0.8"/>
+      <circle cx="78" cy="24" r="2.5" fill="currentColor" style="color:var(--night-accent);opacity:0.8"/>
+      <!-- Small processor unit on band -->
+      <rect x="54" y="14" width="12" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--night-accent)"/>
+      <!-- Subtle label line -->
+      <line x1="30" y1="55" x2="90" y2="55" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2,3" style="color:var(--night-accent);opacity:0.3"/>
     </svg>
   </div>
 
