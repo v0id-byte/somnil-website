@@ -1332,25 +1332,53 @@ footer {
 
   <!-- AI 核心技术数据卡片 -->
   <div class="ai-metrics-card" data-animate style="margin-top:60px; width:100%; max-width:800px;">
-    <div style="font-family:var(--font-mono); font-size:10px; color:var(--night-accent); letter-spacing:2px; margin-bottom:20px; text-align:center; text-transform:uppercase;">// AI 核心技术</div>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:1px; border:1px solid var(--border); background:var(--border);">
-      <div style="padding:28px 20px; background:var(--night); text-align:center;">
-        <div style="font-family:var(--font-mono); font-size:42px; font-weight:700; color:var(--night-accent); line-height:1;">0.921</div>
-        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:8px;">睡眠分期 AUC</div>
-        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px;">5-fold GroupKFold</div>
+    <div style="display:grid; grid-template-columns: 1fr; gap:1px; border:1px solid rgba(74,158,255,0.25); background:rgba(74,158,255,0.1); padding:36px 40px; text-align:center;">
+
+      <!-- 标题 -->
+      <div style="font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--night-accent); letter-spacing:3px; margin-bottom:12px; text-transform:uppercase;">Somnil 双阶段睡眠觉醒检测模型</div>
+
+      <!-- 简短介绍 -->
+      <div style="font-family:var(--font-sans); font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:28px; max-width:560px; margin-left:auto; margin-right:auto;">
+        基于单通道 EEG 信号（Fp1-A2，100Hz），实时检测睡眠中的焦虑相关微觉醒。
       </div>
-      <div style="padding:28px 20px; background:var(--night); text-align:center;">
-        <div style="font-family:var(--font-mono); font-size:42px; font-weight:700; color:var(--night-accent); line-height:1;">0.790</div>
-        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:8px;">焦虑检测 AUC（REM）</div>
-        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px;">最高 0.790 · N2 深睡期 0.777</div>
+
+      <!-- 分隔线 -->
+      <div style="border-top:1px solid rgba(74,158,255,0.2); margin:0 0 28px;"></div>
+
+      <!-- Stage 1 数据 -->
+      <div style="margin-bottom:28px;">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:2px; margin-bottom:10px; text-transform:uppercase;">Stage 1 · 睡眠分期</div>
+        <div style="font-family:var(--font-mono); font-size:56px; font-weight:700; color:var(--night-accent); line-height:1; letter-spacing:-2px;">92.1<span style="font-size:28px;">%</span></div>
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:8px;">5-fold GroupKFold 验证</div>
       </div>
-      <div style="padding:28px 20px; background:var(--night); text-align:center;">
-        <div style="font-family:var(--font-mono); font-size:42px; font-weight:700; color:var(--night-accent); line-height:1;">8</div>
-        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:8px;">EEG 通道数</div>
-        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px;">250Hz · 接触式采集</div>
+
+      <!-- 分隔线 -->
+      <div style="border-top:1px solid rgba(74,158,255,0.2); margin:0 0 28px;"></div>
+
+      <!-- Stage 2 数据 -->
+      <div style="margin-bottom:28px;">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:2px; margin-bottom:14px; text-transform:uppercase;">Stage 2 · 焦虑检测</div>
+        <div style="display:flex; gap:40px; justify-content:center; flex-wrap:wrap;">
+          <div>
+            <div style="font-family:var(--font-mono); font-size:40px; font-weight:700; color:var(--night-accent); line-height:1; letter-spacing:-1px;">79.0<span style="font-size:20px;">%</span></div>
+            <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:6px;">REM 期</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono); font-size:40px; font-weight:700; color:var(--night-accent); line-height:1; letter-spacing:-1px;">77.7<span style="font-size:20px;">%</span></div>
+            <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:6px;">N2 深睡期</div>
+          </div>
+        </div>
       </div>
+
+      <!-- 分隔线 -->
+      <div style="border-top:1px solid rgba(74,158,255,0.2); margin:0 0 20px;"></div>
+
+      <!-- 数据来源 + GitHub -->
+      <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px;">
+        数据来源：PhysioNet Sleep-EDF · <a href="https://github.com/v0id-byte/somnil-eeg" target="_blank" style="color:var(--night-accent); text-decoration:none; border-bottom:1px solid rgba(74,158,255,0.4);">github.com/v0id-byte/somnil-eeg</a>
+      </div>
+
     </div>
-    <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:14px; text-align:center;">基于 PhysioNet Sleep-EDF 数据 · 5-fold GroupKFold 验证 · 受试者级别隔离</div>
   </div>
 </section>
 
