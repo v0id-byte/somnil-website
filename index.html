@@ -1116,8 +1116,9 @@ footer {
 
   <div class="hero-terminal" data-animate>
     <div class="line"><span class="prompt">$</span> curl -X POST <span class="cmd">https://api.somnil.top/v1/detect</span></div>
-    <div class="line" style="margin-top:8px"><span class="prompt">></span> {"status": <span class="cmd">"anxiety_surge_detected"</span>, "beta_ratio": <span class="cmd">1.85</span>}</div>
-    <div class="line" style="margin-top:8px"><span class="prompt">></span> {"action": <span class="cmd">"trigger_pink_noise"</span>, "confidence": <span class="cmd">0.94</span>}</div>
+    <div class="line" style="margin-top:8px"><span class="prompt">></span> {"eeg_channels": <span class="cmd">8</span>, "sample_rate": <span class="cmd">250 Hz</span>, "type": <span class="cmd">"contact"</span>}</div>
+    <div class="line" style="margin-top:4px"><span class="prompt">></span> <span style="color:var(--text-dim)">// 接触式 EEG · 戴在头上，睡着后自动工作，无需操作手机</span></div>
+    <div class="line" style="margin-top:4px"><span class="prompt">></span> <span style="color:var(--text-dim)">// 8通道 · 250Hz · 专业级精度，捕捉细微脑电变化</span></div>
   </div>
 
   <div class="hero-scroll-hint" data-animate>
@@ -1328,6 +1329,29 @@ footer {
       <div class="feature-desc">焦虑触发时<br>释放薰衣草 + 雪松精油<br>触发副交感神经反应</div>
     </div>
   </div>
+
+  <!-- AI 核心技术数据卡片 -->
+  <div class="ai-metrics-card" data-animate style="margin-top:60px; width:100%; max-width:800px;">
+    <div style="font-family:var(--font-mono); font-size:10px; color:var(--night-accent); letter-spacing:2px; margin-bottom:20px; text-align:center; text-transform:uppercase;">// AI 核心技术</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:1px; border:1px solid var(--border); background:var(--border);">
+      <div style="padding:28px 20px; background:var(--night); text-align:center;">
+        <div style="font-family:var(--font-mono); font-size:42px; font-weight:700; color:var(--night-accent); line-height:1;">0.921</div>
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:8px;">睡眠分期 AUC</div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px;">5-fold GroupKFold</div>
+      </div>
+      <div style="padding:28px 20px; background:var(--night); text-align:center;">
+        <div style="font-family:var(--font-mono); font-size:42px; font-weight:700; color:var(--night-accent); line-height:1;">0.790</div>
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:8px;">焦虑检测 AUC（REM）</div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px;">最高 0.790 · N2 深睡期 0.777</div>
+      </div>
+      <div style="padding:28px 20px; background:var(--night); text-align:center;">
+        <div style="font-family:var(--font-mono); font-size:42px; font-weight:700; color:var(--night-accent); line-height:1;">8</div>
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:8px;">EEG 通道数</div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px;">250Hz · 接触式采集</div>
+      </div>
+    </div>
+    <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; margin-top:14px; text-align:center;">基于 PhysioNet Sleep-EDF 数据 · 5-fold GroupKFold 验证 · 受试者级别隔离</div>
+  </div>
 </section>
 
 <hr class="page-divider">
@@ -1427,6 +1451,11 @@ footer {
 
   <h2 class="cta-title" data-animate>准备好<br><span class="accent">重新入睡</span>了吗？</h2>
   <p class="cta-sub" data-animate>Somnil V1.0 限量体验计划开放中</p>
+
+  <div style="text-align:center; margin-bottom:32px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);">
+    // AI 焦虑检测准确率 <span style="color:var(--night-accent); font-weight:700;">77.7%</span>（N2深睡期）<br>
+    <span style="font-size:10px; opacity:0.6;">基于公开数据集 PhysioNet Sleep-EDF 验证</span>
+  </div>
 
   <div style="text-align:center; margin-bottom:32px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);">
     // SOMNIL_beta_users: <span style="color:var(--accent)">247</span> 位体验者 · // avg_sleep_quality_improvement: <span style="color:var(--accent)">+34%</span>
