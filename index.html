@@ -1127,7 +1127,10 @@ footer {
 <!-- ===================== LOADING SCREEN ===================== -->
 <div id="loading-screen">
   <div style="font-family: var(--font-display); font-size: 32px; color: var(--accent); letter-spacing: 8px; font-weight: 700;">SOMNIL</div>
-  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 3px; margin-top: 16px; text-transform: uppercase;">sleep environment</div>
+  <div class="loading-label">sleep environment</div>
+  <div id="loading-percent">0%</div>
+  <div class="loading-bar-wrap"><div id="loading-bar" class="loading-bar-fill"></div></div>
+  <div id="loading-status" class="loading-status">// 连接中...</div>
 </div>
 
 <!-- ===================== NAV ===================== -->
@@ -1608,15 +1611,15 @@ footer {
       if (progress < 100) {
         progress += Math.random() * 2.5 + 0.5;
         if (progress > 100) progress = 100;
-        loadingPercent.textContent = Math.floor(progress) + '%';
-        loadingBar.style.width = progress + '%';
+        if (loadingPercent) loadingPercent.textContent = Math.floor(progress) + '%';
+        if (loadingBar) loadingBar.style.width = progress + '%';
         if (progress > (msgIdx + 1) * (100 / (statusMessages.length - 1))) {
           msgIdx++;
-          loadingStatus.textContent = statusMessages[msgIdx];
+          if (loadingStatus) loadingStatus.textContent = statusMessages[msgIdx];
         }
         setTimeout(updateLoading, 30 + Math.random() * 40);
       } else {
-        loadingStatus.textContent = 'Somnil 已就绪';
+        if (loadingStatus) loadingStatus.textContent = 'Somnil 已就绪';
         setTimeout(() => {
           loadingScreen.classList.add('hidden');
           initScrollAnimations();
