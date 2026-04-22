@@ -37,10 +37,20 @@
   --accent: #FF4500;
   --accent-glow: rgba(255, 69, 0, 0.3);
   --border: #1a1a1a;
-  --night: #0a1628;       /* 新增：深夜蓝 */
-  --night-accent: #4a9eff; /* 新增：夜空蓝 */
+  --night: #0a1628;
+  --night-accent: #4a9eff;
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+}
+
+/* ===================== ACCESSIBILITY: REDUCED MOTION ===================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1106,6 +1116,9 @@ footer {
 </head>
 <body>
 
+<!-- ===================== SKIP TO CONTENT (Accessibility) ===================== -->
+<a href="#page003" class="skip-link" style="position:absolute;left:-9999px;z-index:9999;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">跳过导航，直达内容</a>
+
 <!-- ===================== LOADING SCREEN ===================== -->
 <div id="loading-screen">
   <div class="loading-label">INITIALIZING SLEEP ENVIRONMENT</div>
@@ -1119,7 +1132,7 @@ footer {
 
 <!-- ===================== NAV ===================== -->
 <nav>
-  <div class="nav-logo">SOMNIL</div>
+  <div class="nav-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})" style="cursor:pointer;">SOMNIL</div>
   <button class="nav-hamburger" id="navToggle" aria-label="打开菜单">
     <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
       <rect width="22" height="2" rx="1" fill="white"/>
@@ -1452,7 +1465,7 @@ footer {
       <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">θ (4-8 Hz)</span> <span class="eeg-val">18.7 μV²</span> <span class="eeg-comment">// light_sleep</span></div>
       <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">α (8-13 Hz)</span> <span class="eeg-val">9.3 μV²</span> <span class="eeg-comment">// relaxed_awake</span></div>
       <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">β (13-30 Hz)</span> <span class="eeg-val">12.1 μV²</span> <span class="eeg-comment">// anxiety_marker</span></div>
-      <div class="eeg-line"><span class="eeg-comment">// ANXIETY_INDEX</span> <span class="eeg-val" id="anxiety-val">0.68</span> <span class="eeg-comment">// [0=calm, 1=max]</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// ANXIETY_INDEX</span> <span class="eeg-val" id="anxiety-val" aria-live="polite">0.68</span> <span class="eeg-comment">// [0=calm, 1=max]</span></div>
       <div class="eeg-line"><span class="eeg-comment">// INTERVENTION_TRIGGER</span> <span class="eeg-val" id="intervention-val">PENDING</span></div>
       <div class="eeg-line"><span class="eeg-comment">// SYSTEM_STATUS</span> <span class="eeg-val">ACTIVE</span></div>
     </div>
@@ -1530,8 +1543,8 @@ footer {
   </div>
 
   <div class="cta-buttons" data-animate>
-    <a href="mailto:support@somnil.top?subject=Somnil体验申请" class="btn btn-primary cta-main-btn">申请体验 <span style="font-size:10px; margin-left:8px; opacity:0.8">限量 100 名</span></a>
-    <a href="mailto:support@somnil.top?subject=Somnil详情咨询" class="btn btn-secondary">了解更多</a>
+    <a href="https://somnil.top" class="btn btn-primary cta-main-btn">申请体验 <span style="font-size:10px; margin-left:8px; opacity:0.8">限量 100 名</span></a>
+    <a href="https://somnil.top" class="btn btn-secondary">了解更多</a>
   </div>
 
   <div class="cta-terminal" data-animate>
