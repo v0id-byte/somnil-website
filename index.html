@@ -34,8 +34,8 @@
   --text: #ffffff;
   --text-muted: #9a9a9a;
   --text-dim: #777777;
-  --accent: #FF4500;
-  --accent-glow: rgba(255, 69, 0, 0.3);
+  --accent: #8B5CF6;
+  --accent-glow: rgba(139, 92, 246, 0.3);
   --border: #1a1a1a;
   --night: #0a1628;
   --night-accent: #4a9eff;
@@ -75,11 +75,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  animation: brandFlash 1.2s ease forwards;
+}
+@keyframes brandFlash {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
 }
 #loading-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
+  display: none;
 }
 .loading-label {
   font-family: var(--font-mono);
@@ -1121,13 +1126,8 @@ footer {
 
 <!-- ===================== LOADING SCREEN ===================== -->
 <div id="loading-screen">
-  <div class="loading-label">INITIALIZING SLEEP ENVIRONMENT</div>
-  <div class="loading-percent" id="loading-percent">0%</div>
-  <div class="loading-bar-wrap">
-    <div class="loading-bar-fill" id="loading-bar"></div>
-  </div>
-  <div class="loading-status" id="loading-status">正在进入睡眠状态...</div>
-  <div class="loading-url">HTTPS://SOMNIL.TOP/SESSION/INIT/2026</div>
+  <div style="font-family: var(--font-display); font-size: 32px; color: var(--accent); letter-spacing: 8px; font-weight: 700;">SOMNIL</div>
+  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 3px; margin-top: 16px; text-transform: uppercase;">sleep environment</div>
 </div>
 
 <!-- ===================== NAV ===================== -->
@@ -1539,18 +1539,18 @@ footer {
   </div>
 
   <div style="text-align:center; margin-bottom:32px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);">
-    // SOMNIL_beta_users: <span style="color:var(--accent)">247</span> 位体验者 · // avg_sleep_quality_improvement: <span style="color:var(--accent)">+34%</span>
+    // PhysioNet Sleep-EDF: <span style="color:var(--accent)">197</span> subjects · // CAP Sleep: <span style="color:var(--accent)">108</span> PSG studies
   </div>
 
   <div class="cta-buttons" data-animate>
-    <a href="https://somnil.top" class="btn btn-primary cta-main-btn">申请体验 <span style="font-size:10px; margin-left:8px; opacity:0.8">限量 100 名</span></a>
-    <a href="https://somnil.top" class="btn btn-secondary">了解更多</a>
+    <a href="https://liquid-acoustics.feishu.cn/wiki/SomVwpce4i9QqGktzOxcgX6tneC" target="_blank" class="btn btn-primary cta-main-btn">申请体验 <span style="font-size:10px; margin-left:8px; opacity:0.8">限量 100 名</span></a>
+    <a href="https://github.com/Affaan987/somnil-eeg" target="_blank" class="btn btn-secondary">了解更多</a>
   </div>
 
   <div class="cta-terminal" data-animate>
     <div class="cta-terminal-line"><span class="prompt">$</span> openssl req -new -key somnil_v1.key -out somnil_v1.csr</div>
     <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Certificate request generated: SOMNIL-ACCESS-2026-Q2</div>
-    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> 已加入体验者：<span class="ok">50+</span> 位</div>
+    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> 算法验证：Stage1 AUC=<span class="ok">0.921</span> · Stage2 AUC=<span class="ok">0.79</span></div>
     <div class="cta-terminal-line" style="margin-top:8px"><span class="prompt">$</span> <span style="color:var(--text-dim)">_</span></div>
   </div>
 </section>
