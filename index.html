@@ -1553,7 +1553,7 @@ footer {
   <div class="cta-terminal" data-animate>
     <div class="cta-terminal-line"><span class="prompt">$</span> openssl req -new -key somnil_v1.key -out somnil_v1.csr</div>
     <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Certificate request generated: SOMNIL-ACCESS-2026-Q2</div>
-    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> 算法验证：Stage1 AUC=<span class="ok">0.921</span> · Stage2 AUC=<span class="ok">0.79</span></div>
+    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> 算法验证：Stage1 AUC=<span class="ok">0.921</span> · Stage2 AUC=<span class="ok">0.884</span></div>
     <div class="cta-terminal-line" style="margin-top:8px"><span class="prompt">$</span> <span style="color:var(--text-dim)">_</span></div>
   </div>
 </section>
@@ -1760,8 +1760,8 @@ footer {
           const stage2RemEl = document.getElementById('stage2-rem');
           const stage2N2El = document.getElementById('stage2-n2');
           if (stage1El) setTimeout(() => animateCountUp(stage1El, 92.1, 1500), 200);
-          if (stage2RemEl) setTimeout(() => animateCountUp(stage2RemEl, 79.0, 1500), 500);
-          if (stage2N2El) setTimeout(() => animateCountUp(stage2N2El, 77.7, 1500), 800);
+          if (stage2RemEl) setTimeout(() => animateCountUp(stage2RemEl, 88.4, 1500), 500);
+          if (stage2N2El) setTimeout(() => animateCountUp(stage2N2El, 90.8, 1500), 800);
         }
       });
     }, { threshold: 0.3 });
