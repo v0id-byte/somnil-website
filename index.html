@@ -210,7 +210,7 @@ nav {
   color: var(--text-dim);
   letter-spacing: 3px;
   text-transform: uppercase;
-  margin-bottom: 60px;
+  margin-bottom: 80px;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.7s var(--apple-ease);
@@ -242,9 +242,9 @@ nav {
 .hero-title {
   font-family: var(--font-sans);
   font-size: clamp(56px, 12vw, 120px);
-  font-weight: 600;
-  line-height: 1;
+  font-weight: 400;
   letter-spacing: -0.03em;
+  line-height: 1;
   margin-bottom: 24px;
   opacity: 0;
   transform: translateY(30px);
@@ -321,7 +321,7 @@ nav {
   line-height: 1.7;
   max-width: 560px;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 96px;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.7s var(--apple-ease) 0.4s;
@@ -467,7 +467,7 @@ nav {
   position: relative;
   width: 280px;
   height: 280px;
-  margin-bottom: 60px;
+  margin-bottom: 96px;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.7s var(--apple-ease) 0.3s;
@@ -771,13 +771,19 @@ nav {
   50% { box-shadow: 0 0 60px rgba(74, 158, 255, 0.7); }
 }
 .btn-secondary {
-  background: transparent;
-  border-color: var(--border);
-  color: var(--text-muted);
+  background: none !important;
+  border: none !important;
+  padding: 12px 16px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: var(--text-dim);
+  font-size: 14px;
+  letter-spacing: 0;
 }
 .btn-secondary:hover {
-  border-color: var(--text-muted);
-  color: var(--text);
+  color: var(--text-muted);
+  border: none !important;
+  text-decoration: underline;
 }
 
 .cta-terminal {
@@ -946,7 +952,7 @@ footer {
  font-weight: 300;
  line-height: 1.5;
  color: #ffffff;
- margin-bottom: 60px;
+ margin-bottom: 80px;
  letter-spacing: 1px;
  opacity: 0;
  transform: scale(0.95);
@@ -1576,25 +1582,36 @@ footer {
     ctx.clearRect(0, 0, w, h);
 
     const amp = 15 + anxietyLevel * 30;
-    const freq = 0.015 + anxietyLevel * 0.06;
+    const isCalm = anxietyLevel < 0.35;
+
+    // 平静状态：平滑正弦，无抖动，像海浪
+    // 焦虑状态：保持原有抖动，但速度大幅降低
+    const speed = isCalm ? 0.005 : 0.012 + anxietyLevel * 0.03;
+    const freq = isCalm ? 0.008 : 0.01 + anxietyLevel * 0.04;
     const waveColor = lerpColor('#c0d8ff', '#5a9eff', anxietyLevel);
 
-    // 绘制波形
     ctx.beginPath();
     ctx.strokeStyle = waveColor;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = isCalm ? 1.5 : 2;
     ctx.shadowColor = waveColor;
-    ctx.shadowBlur = 8 + anxietyLevel * 10;
+    ctx.shadowBlur = 6 + anxietyLevel * 8;
 
     for (let x = 0; x < w; x++) {
-      const noise = Math.sin(x * freq * 3.5 + wavePhase * 2.1) * (amp * (0.1 + anxietyLevel * 0.4));
-      const y = h / 2 + Math.sin(x * freq + wavePhase) * amp + noise;
+      let y;
+      if (isCalm) {
+        // 平静：纯正弦，平滑如海浪
+        y = h / 2 + Math.sin(x * freq + wavePhase * 0.5) * amp;
+      } else {
+        // 焦虑：有噪声抖动，但速度放缓很多
+        const noise = Math.sin(x * freq * 3.5 + wavePhase * 1.2) * (amp * (0.1 + anxietyLevel * 0.4));
+        y = h / 2 + Math.sin(x * freq + wavePhase) * amp + noise;
+      }
       if (x === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
     ctx.stroke();
     ctx.shadowBlur = 0;
-    wavePhase += 0.03 + anxietyLevel * 0.08;
+    wavePhase += speed;
     requestAnimationFrame(drawWave);
   }
   setTimeout(drawWave, 100);
