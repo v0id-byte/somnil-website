@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SOMNIL — 床头睡眠环境被动干预</title>
-<meta name="description" content="凌晨半夜惊醒、失眠焦虑睡不着？Somnil 用 EEG 实时监测焦虑发作，在你察觉之前自动调节温度、声场和香气——把睡眠环境调到对的状态，把焦虑化解在还没发作之前。">
+<meta name="description" content="凌晨半夜惊醒、失眠焦虑睡不着？Somnil 静静监测您的睡眠，感知焦虑来临时，悄悄调节温度、声场和香气——把一切调好，让您安稳睡到天亮。">
 <meta name="keywords" content="睡眠监测,焦虑惊醒,EEG,睡眠追踪,床头设备,失眠解决方案">
 <meta property="og:title" content="Somnil — 重新定义睡眠">
 <meta property="og:description" content="半夜惊醒不是你的问题。Somnil 在你意识到之前，把环境调到对的状态。">
@@ -26,21 +26,22 @@
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #000000;
-  --bg-subtle: #0a0a0a;
-  --text: #ffffff;
-  --text-muted: #9a9a9a;
-  --text-dim: #777777;
-  --accent: #8B5CF6;
-  --accent-glow: rgba(139, 92, 246, 0.3);
-  --border: #1a1a1a;
+  --bg: #0b0d10;
+  --bg-subtle: #111318;
+  --text: #f5f5f7;
+  --text-muted: #a1a1a6;
+  --text-dim: #6a6a7a;
+  --accent: #007AFF;
+  --accent-glow: rgba(0, 122, 255, 0.18);
+  --border: #1e2028;
   --night: #0a1628;
-  --night-accent: #4a9eff;
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  --night-accent: #7ab8ff;
+  --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-sans: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', ui-monospace, monospace;
 }
 
 /* ===================== ACCESSIBILITY: REDUCED MOTION ===================== */
@@ -63,6 +64,8 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
 }
 
 /* ===================== LOADING SCREEN ===================== */
@@ -75,53 +78,50 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: brandFlash 1.2s ease forwards;
 }
-@keyframes brandFlash {
-  0% { opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; visibility: hidden; }
+@keyframes brandBreathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }
 #loading-screen.hidden {
   display: none;
 }
 .loading-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 11px;
   color: var(--text-muted);
   letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 24px;
+  animation: brandBreathe 3s ease-in-out infinite;
 }
 .loading-percent {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: clamp(60px, 12vw, 120px);
-  font-weight: 700;
+  font-weight: 300;
   color: var(--accent);
   line-height: 1;
-  letter-spacing: -2px;
-  text-shadow: 0 0 60px var(--accent-glow);
+  letter-spacing: -1px;
 }
 .loading-bar-wrap {
   width: min(400px, 80vw);
-  height: 2px;
+  height: 1px;
   background: var(--border);
   margin-top: 32px;
   overflow: hidden;
 }
 .loading-bar-fill {
   height: 100%;
-  background: var(--accent);
+  background: linear-gradient(to right, var(--accent), var(--night-accent));
   width: 0%;
-  box-shadow: 0 0 10px var(--accent);
+  transition: width 0.3s ease;
 }
 .loading-status {
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
   color: var(--text-dim);
   margin-top: 20px;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 .loading-url {
   font-family: var(--font-mono);
@@ -147,9 +147,9 @@ nav {
   backdrop-filter: blur(4px);
 }
 .nav-logo {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
   letter-spacing: 4px;
   color: var(--text);
 }
@@ -167,15 +167,7 @@ nav {
   list-style: none;
   transition: max-height 0.3s ease, opacity 0.3s ease;
 }
-.nav-links a {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  text-decoration: none;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
-}
+
 .nav-links a:hover { color: var(--accent); }
 
 .nav-links a:hover { color: var(--accent); }
@@ -198,7 +190,7 @@ nav {
     opacity: 0;
   }
   .nav-links.open { max-height: 400px; opacity: 1; }
-  .nav-links a { font-size: 14px; color: #fff; }
+  
 }
 
 /* ===================== SECTIONS ===================== */
@@ -221,7 +213,7 @@ nav {
   margin-bottom: 60px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease;
+  transition: all 0.7s var(--apple-ease);
 }
 .page-label.visible {
   opacity: 1;
@@ -235,59 +227,47 @@ nav {
   position: relative;
 }
 .hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-sans);
+  font-size: 13px;
   color: var(--text-muted);
   letter-spacing: 4px;
   text-transform: uppercase;
   margin-bottom: 32px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease 0.2s;
+  transition: all 0.7s var(--apple-ease) 0.2s;
 }
 .hero-eyebrow.visible { opacity: 1; transform: translateY(0); }
 
 .hero-title {
   font-family: var(--font-sans);
-  font-size: clamp(48px, 10vw, 100px);
-  font-weight: 700;
+  font-size: clamp(56px, 12vw, 120px);
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -2px;
+  letter-spacing: -0.03em;
   margin-bottom: 24px;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.4s;
+  transition: all 0.7s var(--apple-ease) 0.4s;
 }
 .hero-title.visible { opacity: 1; transform: translateY(0); }
 
 .hero-title .accent { color: var(--accent); }
 
 .hero-sub {
-  font-size: clamp(14px, 2vw, 18px);
+  font-size: 17px;
   color: var(--text-muted);
   font-weight: 300;
-  letter-spacing: 1px;
-  line-height: 1.6;
+  letter-spacing: 0.01em;
+  line-height: 1.7;
   max-width: 480px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease 0.6s;
+  transition: all 0.7s var(--apple-ease) 0.6s;
 }
 .hero-sub.visible { opacity: 1; transform: translateY(0); }
 
-.hero-terminal {
-  margin-top: 60px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-dim);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease 0.8s;
-}
-.hero-terminal.visible { opacity: 1; transform: translateY(0); }
-.hero-terminal .cmd { color: var(--accent); }
-.hero-terminal .line { margin: 4px 0; }
-.hero-terminal .prompt { color: var(--text-muted); }
+.hero-terminal { display: none; }
 
 .hero-scroll-hint {
   position: absolute;
@@ -299,19 +279,16 @@ nav {
   align-items: center;
   gap: 8px;
   opacity: 0;
-  transition: opacity 0.8s ease 1.2s;
+  transition: opacity 0.7s var(--apple-ease) 1.2s;
 }
-.hero-scroll-hint.visible { opacity: 1; }
+.hero-scroll-hint.visible { opacity: 0.5; }
 .scroll-line {
   width: 1px;
   height: 40px;
   background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: scrollPulse 2s ease infinite;
+  animation: brandBreathe 3s ease-in-out infinite;
 }
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
+
 .scroll-text {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -324,91 +301,81 @@ nav {
   background: var(--bg);
 }
 .page-header {
-  font-family: var(--font-mono);
-  font-size: clamp(32px, 6vw, 60px);
-  font-weight: 700;
-  line-height: 1.1;
+  font-family: var(--font-sans);
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   margin-bottom: 24px;
   text-align: center;
   opacity: 0;
   transform: translateY(40px);
-  transition: all 0.8s ease 0.2s;
+  transition: all 0.7s var(--apple-ease) 0.2s;
 }
 .page-header.visible { opacity: 1; transform: translateY(0); }
 
 .page-desc {
-  font-size: clamp(14px, 2vw, 18px);
+  font-size: 17px;
   color: var(--text-muted);
   font-weight: 300;
-  line-height: 1.8;
+  line-height: 1.7;
   max-width: 560px;
   text-align: center;
   margin-bottom: 60px;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.4s;
+  transition: all 0.7s var(--apple-ease) 0.4s;
+  letter-spacing: 0.01em;
 }
 .page-desc.visible { opacity: 1; transform: translateY(0); }
 
 .product-form-desc {
-  font-size: clamp(13px, 1.6vw, 16px);
-  color: var(--text);
-  font-weight: 400;
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 300;
   line-height: 1.7;
   max-width: 560px;
   text-align: center;
   margin: -20px auto 40px;
   padding: 14px 24px;
-  background: rgba(74, 158, 255, 0.06);
-  border: 1px solid rgba(74, 158, 255, 0.18);
+  background: rgba(0, 122, 255, 0.06);
   border-radius: 12px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease 0.55s;
+  transition: all 0.7s var(--apple-ease) 0.55s;
 }
 .product-form-desc.visible { opacity: 1; transform: translateY(0); }
 
 .story-card {
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 24px;
   padding: 40px;
   max-width: 600px;
   width: 100%;
   position: relative;
-  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
   transform: translateY(40px);
-  transition: all 0.8s ease 0.6s;
+  transition: all 0.7s var(--apple-ease) 0.6s;
 }
 .story-card.visible { opacity: 1; transform: translateY(0); }
-.story-card::before {
-  content: '// SOMNIL::SLEEP_ANXIETY_DETECTED';
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--accent);
-  letter-spacing: 1px;
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  background: var(--bg);
-  padding: 0 8px;
-}
 .card-time {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-dim);
-  margin-bottom: 16px;
-  letter-spacing: 1px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
 }
 .card-headline {
   font-size: 22px;
-  font-weight: 600;
-  line-height: 1.3;
+  font-weight: 500;
+  line-height: 1.35;
   margin-bottom: 16px;
+  letter-spacing: -0.01em;
 }
 .card-body {
-  font-size: 14px;
+  font-size: 17px;
   color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 24px;
@@ -416,8 +383,8 @@ nav {
 .card-stats {
   display: flex;
   gap: 32px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  margin-top: 8px;
 }
 .stat-item {
   display: flex;
@@ -430,10 +397,7 @@ nav {
   color: var(--text-dim);
   letter-spacing: 1px;
 }
-.stat-value {
-  font-family: var(--font-mono);
-  font-size: 20px;
-  color: var(--accent);
+.stat-value { font-family: var(--font-mono); font-size: 20px; color: var(--night-accent);
   font-weight: 700;
 }
 .stat-unit {
@@ -447,23 +411,22 @@ nav {
 .solution-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1px;
+  gap: 16px;
   width: 100%;
   max-width: 800px;
-  border: 1px solid var(--border);
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.3s;
+  transition: all 0.7s var(--apple-ease) 0.3s;
 }
 .solution-grid.visible { opacity: 1; transform: translateY(0); }
 .solution-item {
   padding: 32px 28px;
-  border-right: 1px solid var(--border);
-  background: var(--bg);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
   transition: background 0.3s ease;
 }
 .solution-item:last-child { border-right: none; }
-.solution-item:hover { background: #0f0f0f; }
+.solution-item:hover { background: rgba(255, 255, 255, 0.06); }
 .sol-badge {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -473,8 +436,8 @@ nav {
   padding: 2px 8px;
   border: 1px solid;
 }
-.sol-fail { color: #ff3333; border-color: #ff3333; }
-.sol-ok { color: #33ff88; border-color: #33ff88; }
+.sol-fail { color: #ff453a; border-color: #ff453a; }
+.sol-ok { color: #30d158; border-color: #30d158; }
 .sol-name {
   font-size: 16px;
   font-weight: 600;
@@ -487,27 +450,11 @@ nav {
   letter-spacing: 1px;
 }
 
-.fail-terminal {
-  margin-top: 40px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  width: 100%;
-  max-width: 600px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease 0.6s;
-}
-.fail-terminal.visible { opacity: 1; transform: translateY(0); }
-.fail-line {
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  gap: 12px;
-}
-.fail-num { color: var(--text-dim); min-width: 30px; }
-.fail-ok { color: #33ff88; }
-.fail-err { color: #ff3333; }
-.fail-msg { color: var(--text-muted); }
+
+
+
+
+
 
 /* ===================== PAGE 003 — SOLUTION (过渡区) ===================== */
 #page003 {
@@ -523,7 +470,7 @@ nav {
   margin-bottom: 60px;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.3s;
+  transition: all 0.7s var(--apple-ease) 0.3s;
 }
 .somnil-visual.visible { opacity: 1; transform: translateY(0); }
 .ring {
@@ -538,7 +485,7 @@ nav {
 .ring-1 { animation: ringPulse 6s ease-in-out infinite; }
 .ring-2 { animation: ringPulse 6s ease-in-out infinite 1.5s; }
 .ring-3 { animation: ringPulse 6s ease-in-out infinite 3s; }
-.ring-4 { width: 60px; height: 60px; background: var(--accent); opacity: 0.15; }
+.ring-4 { width: 60px; height: 60px; background: linear-gradient(to right, var(--accent), var(--night-accent)); opacity: 0.15; }
 @keyframes ringPulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
   50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; }
@@ -557,25 +504,25 @@ nav {
 
 .somnil-features {
   display: flex;
-  gap: 2px;
+  gap: 16px;
   width: 100%;
   max-width: 800px;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.5s;
+  transition: all 0.7s var(--apple-ease) 0.5s;
 }
 .somnil-features.visible { opacity: 1; transform: translateY(0); }
 .feature-col {
   flex: 1;
   padding: 32px 24px;
-  border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   text-align: center;
-  transition: border-color 0.3s ease;
+  transition: background 0.3s ease;
 }
-.feature-col:hover { border-color: var(--night-accent); }
+.feature-col:hover { background: rgba(0, 122, 255, 0.06); }
 .feature-icon {
   width: 48px;
   height: 48px;
@@ -598,9 +545,9 @@ nav {
   text-transform: uppercase;
 }
 .feature-desc {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* ===================== PAGE 004 — TECH (宁静区) ===================== */
@@ -609,18 +556,6 @@ nav {
   --accent: var(--night-accent);
   --accent-glow: rgba(74, 158, 255, 0.3);
   position: relative;
-}
-#page004::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--night-accent), rgba(74, 158, 255, 0.2));
-  transform: scaleY(0);
-  transform-origin: top;
-  animation: scienceBorderGrow 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
 }
 @keyframes scienceBorderGrow {
   to { transform: scaleY(1); }
@@ -632,7 +567,7 @@ nav {
   margin-bottom: 40px;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.2s;
+  transition: all 0.7s var(--apple-ease) 0.2s;
 }
 .eeg-display.visible { opacity: 1; transform: translateY(0); }
 .eeg-header {
@@ -640,9 +575,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-bottom: none;
-  background: #111;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px 12px 0 0;
 }
 .eeg-title {
   font-family: var(--font-mono);
@@ -656,11 +590,11 @@ nav {
   border-radius: 50%;
   background: var(--text-dim);
 }
-.eeg-dot.active { background: var(--accent); }
+.eeg-dot.active { background: linear-gradient(to right, var(--accent), var(--night-accent)); }
 .eeg-body {
-  border: 1px solid var(--border);
   padding: 24px;
-  background: var(--bg);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 0 12px 12px;
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 2;
@@ -682,18 +616,18 @@ nav {
 .tech-specs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1px;
+  gap: 16px;
   width: 100%;
   max-width: 700px;
-  border: 1px solid var(--border);
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.4s;
+  transition: all 0.7s var(--apple-ease) 0.4s;
 }
 .tech-specs.visible { opacity: 1; transform: translateY(0); }
 .spec-item {
   padding: 24px 20px;
-  background: var(--bg);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
   text-align: center;
 }
 .spec-value {
@@ -717,7 +651,7 @@ nav {
   color: var(--text-dim);
   letter-spacing: 1px;
   opacity: 0;
-  transition: opacity 0.8s ease 0.7s;
+  transition: opacity 0.7s var(--apple-ease) 0.7s;
 }
 .passive-note.visible { opacity: 1; }
 .passive-note::before { content: '// '; color: var(--accent); }
@@ -727,8 +661,8 @@ nav {
   margin-top: 40px;
   width: 100%;
   max-width: 700px;
-  border: 1px solid rgba(51, 255, 136, 0.35);
-  background: rgba(51, 255, 136, 0.05);
+  border: none;
+  background: rgba(0, 122, 255, 0.05);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 24px 28px;
@@ -737,7 +671,7 @@ nav {
   gap: 14px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease 0.9s;
+  transition: all 0.7s var(--apple-ease) 0.9s;
 }
 .safety-notice.visible { opacity: 1; transform: translateY(0); }
 .safety-item {
@@ -746,13 +680,13 @@ nav {
   gap: 12px;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: rgba(51, 255, 136, 0.85);
+  color: rgba(122, 184, 255, 0.85);
   letter-spacing: 0.5px;
 }
 .safety-icon {
   font-size: 14px;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 4px rgba(51, 255, 136, 0.5));
+  filter: drop-shadow(0 0 4px rgba(0, 122, 255, 0.4));
 }
 
 /* ===================== PAGE 005 — CTA (最终转化区) ===================== */
@@ -764,25 +698,26 @@ nav {
 }
 
 .cta-title {
-  font-size: clamp(36px, 7vw, 72px);
-  font-weight: 700;
+  font-size: clamp(36px, 7vw, 64px);
+  font-weight: 600;
   line-height: 1.1;
+  letter-spacing: -0.02em;
   margin-bottom: 20px;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease 0.2s;
+  transition: all 0.7s var(--apple-ease) 0.2s;
 }
 .cta-title.visible { opacity: 1; transform: translateY(0); }
 .cta-title .accent { color: var(--accent); }
 
 .cta-sub {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--text-muted);
   font-weight: 300;
   margin-bottom: 48px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease 0.4s;
+  transition: all 0.7s var(--apple-ease) 0.4s;
 }
 .cta-sub.visible { opacity: 1; transform: translateY(0); }
 
@@ -793,7 +728,7 @@ nav {
   justify-content: center;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease 0.6s;
+  transition: all 0.7s var(--apple-ease) 0.6s;
 }
 .cta-buttons.visible { opacity: 1; transform: translateY(0); }
 
@@ -809,7 +744,7 @@ nav {
   text-transform: uppercase;
 }
 .btn-primary {
-  background: var(--accent);
+  background: linear-gradient(to right, var(--accent), var(--night-accent));
   border-color: var(--accent);
   color: #000;
 }
@@ -853,12 +788,12 @@ nav {
   width: 100%;
   max-width: 500px;
   opacity: 0;
-  transition: opacity 0.8s ease 0.9s;
+  transition: opacity 0.7s var(--apple-ease) 0.9s;
 }
 .cta-terminal.visible { opacity: 1; }
 .cta-terminal-line { margin: 4px 0; }
 .cta-terminal .prompt { color: var(--accent); }
-.cta-terminal .ok { color: #33ff88; }
+.cta-terminal .ok { color: #30d158; }
 
 /* ===================== FOOTER (深夜蓝融入) ===================== */
 footer {
@@ -872,22 +807,22 @@ footer {
   gap: 16px;
 }
 .footer-left {
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   color: var(--text-dim);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
 }
 .footer-right {
   display: flex;
   gap: 24px;
 }
 .footer-right a {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-family: var(--font-sans);
+  font-size: 12px;
   color: var(--text-dim);
   text-decoration: none;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  letter-spacing: 0.5px;
   transition: color 0.3s ease;
 }
 .footer-right a:hover { color: var(--accent); }
@@ -896,7 +831,6 @@ footer {
 .page-divider {
   width: 100%;
   border: none;
-  border-top: 1px solid var(--border);
   margin: 0;
 }
 
@@ -935,7 +869,7 @@ footer {
   align-items: center;
   justify-content: center;
   margin: 60px 0;
-  gap: 24px;
+  gap: 20px;
 }
 .os-eyebrow,
 .os-badge-wrapper,
@@ -972,12 +906,11 @@ footer {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 1px;
-  border: 1px solid var(--border);
+  border: none;
   padding: 10px 24px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(4px);
-  transition: all 0.4s ease;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: all 0.3s ease;
 }
 .os-btn:hover {
   border-color: var(--night-accent);
@@ -1028,60 +961,38 @@ footer {
 
 /* 2. 叙事容器：控制左右两侧和分割线的延时触发 */
 .story-wrapper {
- display: flex;
- gap: 40px;
- flex-wrap: wrap;
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
 }
 
 /* 3. 左侧反思：稍晚一点点出现 */
 .story-left {
- flex: 1;
- min-width: 300px;
- opacity: 0;
- transform: translateX(-20px);
- transition: all 0.8s ease 0.4s;
+  flex: 1;
+  min-width: 300px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.7s var(--apple-ease) 0.4s;
 }
-.story-wrapper.visible .story-left {
- opacity: 1;
- transform: translateX(0);
-}
+.story-wrapper.visible .story-left { opacity: 1; transform: translateX(0); }
 
-/* 4. 橙色分割线：像进度条一样往下生长！ */
-.story-divider {
- width: 1px;
- background: var(--accent);
- transform-origin: top;
- transform: scaleY(0);
- transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.8s;
-}
-.story-wrapper.visible .story-divider {
- transform: scaleY(1);
-}
+.story-divider { display: none; }
+.story-wrapper.visible .story-divider { display: none; }
 
 /* 5. 右侧顿悟：最后点亮 */
 .story-right {
- flex: 1;
- min-width: 300px;
- opacity: 0;
- transform: translateX(20px);
- transition: all 0.8s ease 1.2s;
+  flex: 1;
+  min-width: 300px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.7s var(--apple-ease) 0.8s;
 }
-.story-wrapper.visible .story-right {
- opacity: 1;
- transform: translateX(0);
-}
+.story-wrapper.visible .story-right { opacity: 1; transform: translateX(0); }
 
 /* 移动端适配：竖线变成横线生长 */
 @media (max-width: 768px) {
- .story-divider {
- width: 100%;
- height: 1px;
- transform-origin: left;
- transform: scaleX(0);
- }
- .story-wrapper.visible .story-divider {
- transform: scaleX(1);
- }
+ .story-divider { display: none; }
+ .story-wrapper.visible .story-divider { display: none; }
 }
 
 /* ===================== MOBILE ===================== */
@@ -1092,7 +1003,7 @@ footer {
     top: 60px;
     left: 0;
     right: 0;
-    background: rgba(0,0,0,0.95);
+    background: rgba(11,13,16,0.97);
     flex-direction: column;
     padding: 20px;
     gap: 16px;
@@ -1101,22 +1012,46 @@ footer {
     opacity: 0;
   }
   .nav-links.open { max-height: 400px; opacity: 1; }
-  .nav-links a {
-    font-size: 14px;
-    color: #fff;
-  }
-  .section { padding: 100px 20px 60px; }
+  
+  .section { padding: 100px 24px 60px; }
   .hero-terminal, .fail-terminal { display: none; }
   .somnil-features { flex-direction: column; }
-  .solution-grid { grid-template-columns: 1fr 1fr; }
-  .solution-item { padding: 20px 16px; }
-  .solution-item:nth-child(2) { border-right: none; }
-  footer { flex-direction: column; align-items: flex-start; }
-  .card-stats { flex-direction: column; gap: 16px; }
-  .tech-specs { grid-template-columns: repeat(2, 1fr); }
-  .safety-notice { padding: 16px 20px; }
-  #page004::before { display: none; }
+  .solution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s var(--apple-ease) 0.3s;
 }
+  .solution-item {
+  padding: 32px 28px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  transition: background 0.3s ease;
+}
+  
+  footer { flex-direction: column; align-items: flex-start; }
+  .card-stats {
+  display: flex;
+  gap: 32px;
+  padding-top: 24px;
+  margin-top: 8px;
+}
+  .tech-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 700px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s var(--apple-ease) 0.4s;
+}
+  .safety-notice { padding: 16px 20px; }
+  }
 </style>
 </head>
 <body>
@@ -1130,7 +1065,7 @@ footer {
   <div class="loading-label">sleep environment</div>
   <div id="loading-percent">0%</div>
   <div class="loading-bar-wrap"><div id="loading-bar" class="loading-bar-fill"></div></div>
-  <div id="loading-status" class="loading-status">// 连接中...</div>
+  <div id="loading-status" class="loading-status">// 正在准备...</div>
 </div>
 
 <!-- ===================== NAV ===================== -->
@@ -1158,11 +1093,7 @@ footer {
 
   <div class="hero-eyebrow" data-animate>床头睡眠环境被动干预</div>
   <h1 class="hero-title" data-animate>Somnil</h1>
-  <p class="hero-sub" data-animate>半夜惊醒，不是你的问题。<br>AI 检测睡眠焦虑，温和唤醒。</p>
-
-  <div class="hero-terminal" data-animate>
-    <div class="line"><span class="prompt">$</span> curl -X POST <span class="cmd">https://api.somnil.top/v1/detect</span></div>
-    <div class="line" style="margin-top:8px"><span class="prompt">></span> {"eeg_channels": <span class="cmd">8</span>, "sample_rate": <span class="cmd">250 Hz</span>, "type": <span class="cmd">"contact"</span>}</div>
+  <p class="hero-sub" data-animate>半夜惊醒，不是你的错。<br>Somnil 会在你焦虑之前，把一切都悄悄调好。</p><div class="line" style="margin-top:8px"><span class="prompt">></span> {"eeg_channels": <span class="cmd">8</span>, "sample_rate": <span class="cmd">250 Hz</span>, "type": <span class="cmd">"contact"</span>}</div>
     <div class="line" style="margin-top:4px"><span class="prompt">></span> <span style="color:var(--text-dim)">// 接触式 EEG · 戴在头上，睡着后自动工作，无需操作手机</span></div>
     <div class="line" style="margin-top:4px"><span class="prompt">></span> <span style="color:var(--text-dim)">// 8通道 · 250Hz · 专业级精度，捕捉细微脑电变化</span></div>
   </div>
@@ -1181,31 +1112,31 @@ footer {
 
   <h2 class="page-header" data-animate>半夜惊醒，<br>发生了什么？</h2>
   <p class="page-desc" data-animate>
-    凌晨 3:17，脑电波突然从 δ 波跳到 β 波。<br>
-    焦虑发作。心跳加速。清醒意识回来。<br>
-    室温太高？噪音太响？床垫不对？<br>
-    你不知道。你只知道——今晚又毁了。
+    凌晨 3:17，脑电波突然剧烈波动。<br>
+    焦虑来了。心跳加速。意识忽然清醒。<br>
+    你不知道发生了什么，只知道——<br>
+    今晚又睡不好了。
   </p>
 
   <div class="story-card" data-animate>
     <div class="card-time">2026-04-19 // 03:17:42 UTC+8</div>
-    <div class="card-headline">焦虑黎明效应再次触发</div>
+    <div class="card-headline">凌晨，焦虑悄悄来临</div>
     <div class="card-body">
-      β/θ 脑电比值升至 2.7（正常睡眠阈值 0.8）。<br>
-      核心体温偏高 +1.2°C。环境香气余量不足。<br>
-      系统未能及时干预，用户被迫进入清醒状态。
+      系统检测到焦虑前兆信号，<br>
+      核心体温轻微上升，环境未及调整，<br>
+      用户被迫从睡梦中清醒。
     </div>
     <div class="card-stats">
       <div class="stat-item">
-        <span class="stat-label">β/θ 比值</span>
+        <span class="stat-label">焦虑信号</span>
         <span class="stat-value counter" data-target="2.7" data-decimal="1">0</span>
       </div>
       <div class="stat-item">
-        <span class="stat-label">体温异常</span>
+        <span class="stat-label">体温波动</span>
         <span class="stat-value">+<span class="counter" data-target="1.2" data-decimal="1">0</span><span class="stat-unit">°C</span></span>
       </div>
       <div class="stat-item">
-        <span class="stat-label">唤醒时间</span>
+        <span class="stat-label">清醒时长</span>
         <span class="stat-value counter" data-target="3" data-decimal="0">0</span>
         <span class="stat-unit">min</span>
       </div>
@@ -1240,10 +1171,7 @@ footer {
  </p>
  </div>
 
- <!-- 中间：向下生长的顿悟之线 -->
- <div class="story-divider"></div>
-
- <!-- 右侧：新生 -->
+ <!-- 中间：向下生长的顿悟之线 --><!-- 右侧：新生 -->
  <div class="story-right">
  <div data-animate style="font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin-bottom: 16px; letter-spacing: 2px;">V3.0 ARCHITECTURE SHIFT</div>
  <p data-animate style="color: #fff; font-size: 16px; line-height: 1.7; font-weight: 400;">
@@ -1290,11 +1218,7 @@ footer {
       <div class="sol-name">追踪器</div>
       <div class="sol-verdict">仅观测，不干预</div>
     </div>
-  </div>
-
-  <div class="fail-terminal" data-animate>
-    <div class="fail-line"><span class="fail-num">001</span><span class="fail-ok">✓</span><span class="fail-msg">sound_masker.exe — exit code 0 — no anxiety relief</span></div>
-    <div class="fail-line"><span class="fail-num">002</span><span class="fail-err">✗</span><span class="fail-msg">melatonin_patch.exe — timeout — dependency conflict</span></div>
+  </div><div class="fail-line"><span class="fail-num">002</span><span class="fail-err">✗</span><span class="fail-msg">melatonin_patch.exe — timeout — dependency conflict</span></div>
     <div class="fail-line"><span class="fail-num">003</span><span class="fail-ok">✓</span><span class="fail-msg">sleep_tracker.exe — running — passive observation only</span></div>
     <div class="fail-line"><span class="fail-num">004</span><span class="fail-err">✗</span><span class="fail-msg">all_current_solutions.exe — FAILED: reactive not preventive</span></div>
   </div>
@@ -1312,7 +1236,7 @@ footer {
     而是在你还没意识到之前，就把环境调到对的状态。
   </p>
   <p class="product-form-desc" data-animate>
-    Somnil 是一款软质头环，佩戴于额头，内嵌 EEG 干电极，睡前戴上，设备自动开始工作，无需操作手机或任何设备。
+    Somnil 是一款软质头环，睡前戴上，它就会安静地开始工作——不需要操作手机，不需要任何配合。
   </p>
 
   <div class="somnil-visual" data-animate>
@@ -1388,7 +1312,7 @@ footer {
 
   <!-- AI 核心技术数据卡片 -->
   <div class="ai-metrics-card" data-animate style="margin-top:60px; width:100%; max-width:800px;">
-    <div style="display:grid; grid-template-columns: 1fr; gap:1px; border:1px solid rgba(74,158,255,0.25); background:rgba(74,158,255,0.1); padding:36px 40px; text-align:center;">
+    <div style="display:grid; grid-template-columns: 1fr; gap:1px; border: none; background: rgba(0, 122, 255, 0.06); padding:36px 40px; text-align:center;">
 
       <!-- 标题 -->
       <div style="font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--night-accent); letter-spacing:3px; margin-bottom:12px; text-transform:uppercase;">Somnil 双阶段睡眠觉醒检测模型</div>
@@ -1399,7 +1323,7 @@ footer {
       </div>
 
       <!-- 分隔线 -->
-      <div style="border-top:1px solid rgba(74,158,255,0.2); margin:0 0 28px;"></div>
+      <div style="border-top: 1px solid rgba(255,255,255,0.05); margin:0 0 28px;"></div>
 
       <!-- Stage 1 数据 -->
       <div style="margin-bottom:28px;">
@@ -1409,7 +1333,7 @@ footer {
       </div>
 
       <!-- 分隔线 -->
-      <div style="border-top:1px solid rgba(74,158,255,0.2); margin:0 0 28px;"></div>
+      <div style="border-top: 1px solid rgba(255,255,255,0.05); margin:0 0 28px;"></div>
 
       <!-- Stage 2 数据 -->
       <div style="margin-bottom:28px;">
@@ -1428,7 +1352,7 @@ footer {
       </div>
 
       <!-- 分隔线 -->
-      <div style="border-top:1px solid rgba(74,158,255,0.2); margin:0 0 20px;"></div>
+      <div style="border-top: 1px solid rgba(255,255,255,0.05); margin:0 0 20px;"></div>
 
       <!-- 数据来源 + GitHub -->
       <div style="font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px;">
@@ -1461,7 +1385,7 @@ footer {
       </div>
     </div>
     <div class="eeg-body">
-      <div class="eeg-line"><span class="eeg-comment">// SESSION</span> <span class="eeg-key">SNS-2026-0419-0312-ALL</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// SESSION</span> <span class="eeg-key">SOMNIL-2026-0301</span></div>
       <div class="eeg-line"><span class="eeg-comment">// EEG_SAMPLE_RATE</span> <span class="eeg-val">250 Hz</span></div>
       <div class="eeg-line"><span class="eeg-comment">// CHANNELS</span> <span class="eeg-val">Fp1, Fp2, F7, F8, T3, T4, O1, O2</span></div>
       <div class="eeg-line"><span class="eeg-comment">// BAND_POWER_ANALYSIS</span></div>
@@ -1469,8 +1393,8 @@ footer {
       <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">θ (4-8 Hz)</span> <span class="eeg-val">18.7 μV²</span> <span class="eeg-comment">// light_sleep</span></div>
       <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">α (8-13 Hz)</span> <span class="eeg-val">9.3 μV²</span> <span class="eeg-comment">// relaxed_awake</span></div>
       <div class="eeg-line" style="padding-left:16px"><span class="eeg-key">β (13-30 Hz)</span> <span class="eeg-val">12.1 μV²</span> <span class="eeg-comment">// anxiety_marker</span></div>
-      <div class="eeg-line"><span class="eeg-comment">// ANXIETY_INDEX</span> <span class="eeg-val" id="anxiety-val" aria-live="polite">0.68</span> <span class="eeg-comment">// [0=calm, 1=max]</span></div>
-      <div class="eeg-line"><span class="eeg-comment">// INTERVENTION_TRIGGER</span> <span class="eeg-val" id="intervention-val">PENDING</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// 睡眠状态</span> <span class="eeg-val" id="anxiety-val" aria-live="polite">0.68</span> <span class="eeg-comment">// 0=平静, 1=焦虑</span></div>
+      <div class="eeg-line"><span class="eeg-comment">// 环境调节</span> <span class="eeg-val" id="intervention-val">PENDING</span></div>
       <div class="eeg-line"><span class="eeg-comment">// SYSTEM_STATUS</span> <span class="eeg-val">ACTIVE</span></div>
     </div>
   </div>
@@ -1498,12 +1422,12 @@ footer {
     </div>
   </div>
 
-  <div class="passive-note" data-animate>全流程被动干预 — 无需唤醒，无感调节</div>
+  <div class="passive-note" data-animate>全程无感调节 — 无需醒来，无需操作</div>
 
   <!-- 硬件安全声明框 -->
   <div class="safety-notice" data-animate>
-    <div class="safety-item"><span class="safety-icon">📡</span>无辐射 — 被动式 EEG 传感，零电磁辐射</div>
-    <div class="safety-item"><span class="safety-icon">🔒</span>数据私有 — 本地边缘计算，梦境数据永不上云</div>
+    <div class="safety-item"><span class="safety-icon">📡</span>安静守护 — 无辐射、无噪音、无打扰</div>
+    <div class="safety-item"><span class="safety-icon">🔒</span>私密安心 — 您的梦境数据，只属于您自己</div>
   </div>
 </section>
 
@@ -1534,8 +1458,8 @@ footer {
 <section id="page005" class="section">
   <div class="page-label" data-animate>PAGE <span>005</span> / SOMNIL</div>
 
-  <h2 class="cta-title" data-animate>准备好<br><span class="accent">重新入睡</span>了吗？</h2>
-  <p class="cta-sub" data-animate>Somnil V1.0 限量体验计划开放中</p>
+  <h2 class="cta-title" data-animate>准备好<br><span class="accent">睡个好觉</span>了吗？</h2>
+  <p class="cta-sub" data-animate>Somnil V1.0 限量体验计划开放申请</p>
 
   <div style="text-align:center; margin-bottom:32px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);">
     // AI 睡眠分期分类 AUC <span style="color:var(--night-accent); font-weight:700;">0.936</span>（N2深睡期）<br>
@@ -1549,11 +1473,7 @@ footer {
   <div class="cta-buttons" data-animate>
     <a href="https://liquid-acoustics.feishu.cn/wiki/SomVwpce4i9QqGktzOxcgX6tneC" target="_blank" class="btn btn-primary cta-main-btn">申请体验 <span style="font-size:10px; margin-left:8px; opacity:0.8">限量 100 名</span></a>
     <a href="https://liquid-acoustics.feishu.cn/wiki/SomVwpce4i9QqGktzOxcgX6tneC" target="_blank" class="btn btn-secondary">了解更多</a>
-  </div>
-
-  <div class="cta-terminal" data-animate>
-    <div class="cta-terminal-line"><span class="prompt">$</span> openssl req -new -key somnil_v1.key -out somnil_v1.csr</div>
-    <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Certificate request generated: SOMNIL-ACCESS-2026-Q2</div>
+  </div><div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> Certificate request generated: SOMNIL-ACCESS-2026-Q2</div>
     <div class="cta-terminal-line"><span class="prompt">></span> <span class="ok">✓</span> 算法验证：Stage1 AUC=<span class="ok">0.921</span> · Stage2 AUC=<span class="ok">0.884</span></div>
     <div class="cta-terminal-line" style="margin-top:8px"><span class="prompt">$</span> <span style="color:var(--text-dim)">_</span></div>
   </div>
@@ -1599,11 +1519,9 @@ footer {
     const loadingBar = document.getElementById('loading-bar');
     const loadingStatus = document.getElementById('loading-status');
     const statusMessages = [
-      '// 建立双通道脑电连接...',
-      '// 提取环境噪音底噪...',
-      '// 测算 LTA 个人睡眠基线...',
-      '// 激活三级抗干扰阵列...',
-      '// SOMNIL 系统已接管'
+      '// 准备中...',
+      '// 正在连接...',
+      '// 一切就绪'
     ];
     let progress = 0;
     let msgIdx = 0;
@@ -1620,7 +1538,7 @@ footer {
         }
         setTimeout(updateLoading, 30 + Math.random() * 40);
       } else {
-        if (loadingStatus) loadingStatus.textContent = 'Somnil 已就绪';
+        if (loadingStatus) loadingStatus.textContent = 'Somnil 已就绪 ☽';
         setTimeout(() => {
           loadingScreen.classList.add('hidden');
           initScrollAnimations();
@@ -1642,7 +1560,7 @@ footer {
   if (!canvas) { console.warn('waveCanvas not found'); return; }
   const ctx = canvas.getContext('2d');
   let wavePhase = 0;
-  let anxietyLevel = 0.8; // 初始高焦虑
+  let anxietyLevel = 0.4; // 初始平静
 
   // 颜色插值函数（从夜空蓝过渡到警戒橙）
   function lerpColor(a, b, amount) {
@@ -1667,7 +1585,7 @@ footer {
 
     const amp = 15 + anxietyLevel * 30;
     const freq = 0.015 + anxietyLevel * 0.06;
-    const waveColor = lerpColor('#4a9eff', '#FF4500', anxietyLevel);
+    const waveColor = lerpColor('#c0d8ff', '#5a9eff', anxietyLevel);
 
     // 绘制波形
     ctx.beginPath();
@@ -1707,8 +1625,8 @@ footer {
     const interventionVal = document.getElementById('intervention-val');
     if (anxietyVal) anxietyVal.textContent = anxietyLevel.toFixed(2);
     if (interventionVal) {
-      interventionVal.textContent = anxietyLevel > 0.75 ? 'ACTIVE' : anxietyLevel > 0.55 ? 'PENDING' : 'STANDBY';
-      interventionVal.style.color = anxietyLevel > 0.75 ? '#FF4500' : anxietyLevel > 0.55 ? '#FFA500' : '#33ff88';
+      interventionVal.textContent = anxietyLevel > 0.75 ? '干预中' : anxietyLevel > 0.55 ? '监测中' : '平静';
+      interventionVal.style.color = anxietyLevel > 0.75 ? '#7ab8ff' : anxietyLevel > 0.55 ? '#a0c4ff' : '#5ab8ff';
     }
   }
   setInterval(updateEEGDisplay, 200);
