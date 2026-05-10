@@ -1090,11 +1090,11 @@
     <p class="cta-sub r d2">
       加入候补名单，成为首批体验者。<br>在你最脆弱的凌晨，让环境替你接住焦虑。
     </p>
-    <div class="cta-form r d3">
-      <input type="email" class="cta-input" placeholder="你的邮箱地址" />
-      <button class="cta-submit">加入候补</button>
+    <div class="cta-form r d3" id="email-form">
+      <input type="email" class="cta-input" id="cta-email" placeholder="你的邮箱地址" />
+      <button class="cta-submit" id="cta-submit">加入候补</button>
     </div>
-    <p class="cta-note r d4">首批限量 <b style="color:var(--text);font-weight:inherit;">500</b> 台 · 预计 2026 Q4 发货 · 众筹价 <b style="color:var(--accent);font-weight:inherit;">¥3,499 起</b></p>
+    <p class="cta-note r d4" id="cta-status">首批限量 <b style="color:var(--text);font-weight:inherit;">500</b> 台 · 预计 2026 Q4 发货 · 众筹价 <b style="color:var(--accent);font-weight:inherit;">¥3,499 起</b></p>
   </div>
 </section>
 
@@ -1184,6 +1184,45 @@
       requestAnimationFrame(draw);
     }
     draw();
+  })();
+  // Email capture
+  (function () {
+    var form = document.getElementById('email-form');
+    var input = document.getElementById('cta-email');
+    var btn = document.getElementById('cta-submit');
+    var status = document.getElementById('cta-status');
+    if (!form || !input || !btn || !status) return;
+
+    btn.addEventListener('click', function () {
+      var email = input.value.trim();
+      if (!email || !email.includes('@')) {
+        status.innerHTML = '<b style="color:#ff6b6b">请输入有效邮箱地址</b>';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = '提交中...';
+      status.innerHTML = '<b style="color:var(--accent)">提交中...</b>';
+      fetch('http://mc.void1211.com:1212/somnil-api/api/email_capture', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email: email})
+      }).then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.status === 'ok') {
+            status.innerHTML = '<b style="color:#4ecdc4">✅ 已加入候补！</b>';
+            btn.textContent = '已加入';
+            input.disabled = true;
+          } else {
+            status.innerHTML = '<b style="color:#ff6b6b">提交失败，请重试</b>';
+            btn.disabled = false;
+            btn.textContent = '加入候补';
+          }
+        }).catch(function() {
+          status.innerHTML = '<b style="color:#ff6b6b">网络错误，请重试</b>';
+          btn.disabled = false;
+          btn.textContent = '加入候补';
+        });
+    });
   })();
 </script>
 
