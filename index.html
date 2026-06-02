@@ -1203,9 +1203,9 @@
           data-zh="读懂你的睡眠，<br><span class=&quot;ac&quot;>精度逼近人类专家。</span>"
           data-en="It reads your sleep<br><span class=&quot;ac&quot;>at near human-expert accuracy.</span>">读懂你的睡眠，<br><span class="ac">精度逼近人类专家。</span></h2>
       <p class="body-text r d2 i18n"
-         data-zh="Somnil 的识别能力，建立在医学界研究睡眠的两个黄金标准数据集之上。我们特意纳入了<strong style=&quot;color:var(--text);font-weight:600;&quot;>临床病理睡眠人群</strong>——失眠、快速眼动期行为障碍、周期性肢动——让它不只读得懂健康人的睡眠。"
-         data-en="Somnil's detection is built on two gold-standard medical sleep datasets. We deliberately included <strong style=&quot;color:var(--text);font-weight:600;&quot;>clinical disordered-sleep populations</strong> — insomnia, REM-behavior disorder, periodic limb movement — so it doesn't only understand healthy sleep.">
-        Somnil 的识别能力，建立在医学界研究睡眠的两个黄金标准数据集之上。我们特意纳入了<strong style="color:var(--text);font-weight:600;">临床病理睡眠人群</strong>——失眠、快速眼动期行为障碍、周期性肢动——让它不只读得懂健康人的睡眠。
+         data-zh="Somnil 的识别能力，建立在医学界研究睡眠的<strong style=&quot;color:var(--text);font-weight:600;&quot;>三个黄金标准数据集</strong>之上——其中 Dreem 的前额头环数据，<strong style=&quot;color:var(--text);font-weight:600;&quot;>最接近 Somnil 自己的佩戴方式</strong>。我们还特意纳入临床病理睡眠人群（失眠、RBD、周期性肢动），让它不只读得懂健康人的睡眠。"
+         data-en="Somnil's detection is built on <strong style=&quot;color:var(--text);font-weight:600;&quot;>three gold-standard sleep datasets</strong> — including Dreem's forehead-headband data, <strong style=&quot;color:var(--text);font-weight:600;&quot;>the closest match to how Somnil itself is worn</strong>. We also included clinical disordered-sleep populations (insomnia, RBD, periodic limb movement), so it doesn't only understand healthy sleep.">
+        Somnil 的识别能力，建立在医学界研究睡眠的<strong style="color:var(--text);font-weight:600;">三个黄金标准数据集</strong>之上——其中 Dreem 的前额头环数据，<strong style="color:var(--text);font-weight:600;">最接近 Somnil 自己的佩戴方式</strong>。我们还特意纳入临床病理睡眠人群（失眠、RBD、周期性肢动），让它不只读得懂健康人的睡眠。
       </p>
       <p class="body-text r d3 i18n"
          data-zh="在读懂睡眠结构的基础上，它会留意那些你自己都没察觉的早期信号——抢在你被惊醒之前。"
@@ -1240,15 +1240,30 @@
                 data-en="~98 records<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Clinical / pathological</span>">~98 例<br><span style="font-size:11px;color:var(--text-3)">临床病理人群</span></td>
             <td class="i18n" data-zh="失眠 / RBD / 周期性肢动等病理睡眠" data-en="Insomnia / RBD / PLM and other disordered sleep">失眠 / RBD / 周期性肢动等病理睡眠</td>
           </tr>
+          <tr>
+            <td class="i18n"
+                data-zh="Dreem DOD-H<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>前额头环导联</span>"
+                data-en="Dreem DOD-H<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Forehead-headband montage</span>">Dreem DOD-H<br><span style="font-size:11px;color:var(--text-3)">前额头环导联</span></td>
+            <td class="i18n"
+                data-zh="~25 夜<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>最接近 Somnil</span>"
+                data-en="~25 nights<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Closest to Somnil</span>">~25 夜<br><span style="font-size:11px;color:var(--text-3)">最接近 Somnil</span></td>
+            <td class="i18n" data-zh="贴近真实佩戴的前额脑电特征" data-en="Forehead EEG closest to real-world wear">贴近真实佩戴的前额脑电特征</td>
+          </tr>
         </tbody>
       </table>
 
       <div class="evidence-copy r d4" style="margin-top: 28px;">
         <p class="footnote i18n"
-           data-zh="方法在公开医学睡眠数据集（Sleep-EDF / CAP）上训练与验证 · 交叉验证：被试级 5-fold GroupKFold（按人切分，无数据泄漏）"
-           data-en="Methods trained and validated on public medical sleep datasets (Sleep-EDF / CAP) · Cross-validation: subject-level 5-fold GroupKFold (split by person, no leakage)">
-          方法在公开医学睡眠数据集（Sleep-EDF / CAP）上训练与验证 · 交叉验证：被试级 5-fold GroupKFold（按人切分，无数据泄漏）
+           data-zh="在三个公开黄金标准数据集（Sleep-EDF / CAP / Dreem DOD-H）上训练，并在完全独立的医院数据集上验证泛化 · 被试级 5 折交叉验证（按人切分，无数据泄漏）"
+           data-en="Trained on three public gold-standard datasets (Sleep-EDF / CAP / Dreem DOD-H) and validated for generalization on a fully held-out hospital dataset · subject-level 5-fold cross-validation (split by person, no leakage)">
+          在三个公开黄金标准数据集（Sleep-EDF / CAP / Dreem DOD-H）上训练，并在完全独立的医院数据集上验证泛化 · 被试级 5 折交叉验证（按人切分，无数据泄漏）
         </p>
+      </div>
+
+      <div class="r d4" style="margin-top: 22px; border-left: 2px solid var(--accent); padding: 6px 0 6px 18px;">
+        <p class="i18n" style="font-size: 14px; color: var(--text-2); line-height: 1.7;"
+           data-zh="<strong style=&quot;color:var(--text);font-weight:600;&quot;>最新进展 ·</strong> Somnil 头环已成功采集到真实脑电。我们正用佩戴者的真实数据微调模型，预计约三个月后推出基于自有数据的版本。"
+           data-en="<strong style=&quot;color:var(--text);font-weight:600;&quot;>Latest ·</strong> The Somnil headband is now recording real EEG. We're fine-tuning on real wearer data — an own-data model is expected in about three months."><strong style="color:var(--text);font-weight:600;">最新进展 ·</strong> Somnil 头环已成功采集到真实脑电。我们正用佩戴者的真实数据微调模型，预计约三个月后推出基于自有数据的版本。</p>
       </div>
     </div>
 
@@ -1258,8 +1273,8 @@
           <div class="auc-row-label i18n" data-zh="睡眠分期精度 · 健康人群" data-en="Sleep-staging accuracy · healthy">睡眠分期精度 · 健康人群</div>
           <div class="auc-val">80<span>%</span></div>
           <div class="auc-sub i18n"
-               data-zh="仅用单个前额通道 · 逼近人类技师一致性（≈82.6%）· 与单通道睡眠分期的公开最好成绩同级"
-               data-en="From a single forehead channel · near human inter-scorer agreement (≈82.6%) · on par with the best published single-channel staging">仅用单个前额通道 · 逼近人类技师一致性（≈82.6%）· 与单通道睡眠分期的公开最好成绩同级</div>
+               data-zh="第三代模型 · 在 Sleep-EDF / CAP / Dreem 三个数据集上训练 · 逼近人类技师一致性（≈82.6%）· 仅单个前额通道"
+               data-en="3rd-generation model · trained on Sleep-EDF / CAP / Dreem · near human inter-scorer agreement (≈82.6%) · single forehead channel">第三代模型 · 在 Sleep-EDF / CAP / Dreem 三个数据集上训练 · 逼近人类技师一致性（≈82.6%）· 仅单个前额通道</div>
         </div>
         <div class="auc-duo">
           <div class="auc-mini">
