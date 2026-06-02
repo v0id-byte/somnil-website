@@ -103,7 +103,7 @@
       border: 1px solid var(--line-2);
       border-radius: 2px;
       padding: 0; overflow: hidden;
-      font-family: var(--mono);
+      font-family: var(--sans);
       font-size: 11px; font-weight: 500;
       letter-spacing: 0.08em;
       cursor: pointer;
@@ -149,7 +149,7 @@
 
     /* ─── LABEL ───────────────────────────────────────── */
     .label {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--text-3);
       display: flex; align-items: center; gap: 10px;
@@ -279,11 +279,11 @@
       background: var(--bg-3);
     }
     .incident-ts {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       letter-spacing: 0.06em; color: var(--text-3);
     }
     .incident-badge {
-      font-family: var(--mono); font-size: 9px;
+      font-family: var(--sans); font-size: 9px;
       letter-spacing: 0.12em; text-transform: uppercase;
       padding: 3px 8px; border-radius: 2px;
     }
@@ -305,14 +305,14 @@
     }
     .istat:last-child { border-right: none; }
     .istat-val {
-      font-family: var(--mono); font-size: 20px;
+      font-family: var(--sans); font-size: 20px;
       font-weight: 600; color: var(--text);
       line-height: 1; margin-bottom: 4px;
     }
     .istat-val.warn { color: var(--amber); }
     .istat-val.ok   { color: var(--green); }
     .istat-key {
-      font-family: var(--mono); font-size: 9px;
+      font-family: var(--sans); font-size: 9px;
       letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--text-3);
     }
@@ -344,7 +344,7 @@
     .fail-item:hover { background: var(--bg-3); }
     .fail-verdict {
       display: inline-flex; align-items: center; gap: 5px;
-      font-family: var(--mono); font-size: 9px;
+      font-family: var(--sans); font-size: 9px;
       letter-spacing: 0.16em; text-transform: uppercase;
       margin-bottom: 14px; padding: 3px 8px; border-radius: 2px;
     }
@@ -371,7 +371,7 @@
       padding-left: 28px; margin-bottom: 24px;
     }
     .shift-label {
-      font-family: var(--mono); font-size: 9px;
+      font-family: var(--sans); font-size: 9px;
       letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--accent); margin-bottom: 16px;
     }
@@ -405,7 +405,7 @@
     }
     .flow-step:hover { background: var(--bg-3); }
     .flow-num {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       letter-spacing: 0.12em; color: var(--text-3);
       margin-bottom: 20px;
     }
@@ -443,7 +443,7 @@
     .icard:hover { border-color: var(--line-2); }
 
     .icard-label {
-      font-family: var(--mono); font-size: 9px;
+      font-family: var(--sans); font-size: 9px;
       letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--text-3); margin-bottom: 20px;
     }
@@ -468,7 +468,7 @@
     .icard.sound .icard-stat-val { color: var(--accent); }
     .icard.scent .icard-stat-val { color: var(--green); }
     .icard-stat-key {
-      font-family: var(--mono); font-size: 9px;
+      font-family: var(--sans); font-size: 9px;
       letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--text-3);
     }
@@ -497,18 +497,18 @@
     .auc-row:last-child { border-bottom: none; }
     .auc-row:hover { background: var(--bg-2); }
     .auc-row-label {
-      font-family: var(--mono); font-size: 9px;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 10px;
+      font-family: var(--sans); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text-2); margin-bottom: 12px;
     }
     .auc-val {
-      font-size: 52px; font-weight: 700;
+      font-size: 64px; font-weight: 700;
       letter-spacing: -0.03em; color: var(--text);
-      line-height: 1; margin-bottom: 6px;
+      line-height: 1; margin-bottom: 8px;
     }
-    .auc-val span { font-size: 28px; color: var(--accent); }
+    .auc-val span { font-size: 34px; color: var(--accent); }
     .auc-sub {
-      font-size: 12px; color: var(--text-3); line-height: 1.6;
+      font-size: 13.5px; color: var(--text-2); line-height: 1.65;
     }
 
     .auc-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
@@ -518,15 +518,15 @@
     }
     .auc-mini:hover { background: var(--bg-3); }
     .auc-mini-val {
-      font-size: 36px; font-weight: 700;
+      font-size: 50px; font-weight: 700;
       letter-spacing: -0.03em;
-      color: var(--text); line-height: 1; margin-bottom: 5px;
+      color: var(--text); line-height: 1; margin-bottom: 8px;
     }
-    .auc-mini-val span { font-size: 18px; color: var(--accent); }
+    .auc-mini-val span { font-size: 24px; color: var(--accent); }
     .auc-mini-key {
-      font-family: var(--mono); font-size: 9px;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-3);
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--text-2);
     }
 
     /* Dataset table */
@@ -544,7 +544,7 @@
     }
     .dataset-table tr:last-child td { border-bottom: none; }
     .dataset-table th {
-      font-family: var(--mono); font-size: 9px;
+      font-family: var(--sans); font-size: 9px;
       letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--text-3); background: var(--bg-2);
       font-weight: 600;
@@ -554,7 +554,7 @@
 
     .evidence-copy p { margin-bottom: 20px; }
     .evidence-copy .footnote {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       color: var(--text-3); letter-spacing: 0.04em; line-height: 1.6;
       padding-top: 20px; border-top: 1px solid var(--line);
     }
@@ -578,7 +578,7 @@
       pointer-events: none;
     }
     .cta-label {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       letter-spacing: 0.20em; text-transform: uppercase;
       color: var(--accent); margin-bottom: 28px;
     }
@@ -617,7 +617,7 @@
     }
     .cta-submit:hover { opacity: 0.85; }
     .cta-note {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       color: var(--text-3); margin-top: 14px;
       letter-spacing: 0.04em;
     }
@@ -636,16 +636,39 @@
     .footer-brand b { color: var(--accent); font-weight: 700; }
     .footer-links { display: flex; gap: 28px; list-style: none; }
     .footer-links a {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--text-3); text-decoration: none;
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--text-2); }
     .footer-copy {
-      font-family: var(--mono); font-size: 10px;
+      font-family: var(--sans); font-size: 10px;
       color: var(--text-3); letter-spacing: 0.04em;
     }
+
+    /* ─── PRIVACY / TRUST BAND ────────────────────────── */
+    #privacy {
+      padding: 140px 0;
+      border-top: 1px solid var(--line);
+      background: var(--bg-2);
+    }
+    #privacy .inner { max-width: var(--max); margin: 0 auto; padding: 0 56px; }
+    .privacy-head { max-width: 620px; margin-bottom: 56px; }
+    .privacy-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .privacy-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px; padding: 30px 28px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .privacy-card:hover { border-color: var(--line-2); transform: translateY(-3px); }
+    .privacy-icon { width: 28px; height: 28px; margin-bottom: 18px; color: var(--green); }
+    .privacy-icon svg { width: 100%; height: 100%; }
+    .privacy-title { font-size: 17px; font-weight: 600; color: var(--green); margin-bottom: 9px; }
+    .privacy-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; }
 
     /* ─── MOBILE ──────────────────────────────────────── */
     @media (max-width: 768px) {
@@ -656,7 +679,7 @@
       .lang-toggle button { padding: 6px 8px; font-size: 10px; }
 
       .wrap { padding: 0 20px; }
-      #fail .inner, #how .inner { padding: 0 20px; }
+      #fail .inner, #how .inner, #privacy .inner { padding: 0 20px; }
 
       #hero { padding: 104px 18px 0; }
       .hero-actions { flex-direction: column; }
@@ -674,7 +697,8 @@
       /* Multi-column grids */
       .fail-grid { grid-template-columns: repeat(2, 1fr); }
       .flow,
-      .interventions { grid-template-columns: 1fr; }
+      .interventions,
+      .privacy-grid { grid-template-columns: 1fr; }
       .auc-duo { grid-template-columns: 1fr; }
 
       /* CTA form: stack vertically */
@@ -1290,13 +1314,13 @@
         </div>
         <div class="auc-duo">
           <div class="auc-mini">
-            <div class="auc-row-label i18n" style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px;"
+            <div class="auc-row-label i18n" style="font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-2); margin-bottom: 12px;"
                  data-zh="临床病理人群" data-en="Clinical / pathological">临床病理人群</div>
             <div class="auc-mini-val">78<span>%</span></div>
             <div class="auc-mini-key i18n" data-zh="失眠 · RBD · 周期性肢动" data-en="Insomnia · RBD · PLM">失眠 · RBD · 周期性肢动</div>
           </div>
           <div class="auc-mini">
-            <div class="auc-row-label i18n" style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px;"
+            <div class="auc-row-label i18n" style="font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-2); margin-bottom: 12px;"
                  data-zh="深睡 (N3) 召回" data-en="Deep sleep (N3) recall">深睡 (N3) 召回</div>
             <div class="auc-mini-val">0.79</div>
             <div class="auc-mini-key i18n" data-zh="病理人群也能准确识别深睡" data-en="Accurate deep sleep even in disordered sleep">病理人群也能准确识别深睡</div>
@@ -1306,33 +1330,78 @@
           <div class="auc-row-label i18n" data-zh="头环硬件" data-en="Headband Hardware">头环硬件</div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-top: 12px;">
             <div>
-              <div style="font-size: 22px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;" class="i18n"
+              <div style="font-size: 28px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;" class="i18n"
                    data-zh="250<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>次/秒</span>"
                    data-en="250<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>Hz</span>">250<span style="font-size:14px; color: var(--accent); margin-left:3px;">次/秒</span></div>
-              <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3);" class="i18n"
+              <div style="font-family: var(--sans); font-size: 11.5px; font-weight: 500; letter-spacing: 0.01em; color: var(--text-2);" class="i18n"
                    data-zh="脑波监测频率" data-en="Sampling rate">脑波监测频率</div>
             </div>
             <div>
-              <div style="font-size: 22px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;" class="i18n"
+              <div style="font-size: 28px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;" class="i18n"
                    data-zh="8<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>个</span>"
                    data-en="8<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>ch</span>">8<span style="font-size:14px; color: var(--accent); margin-left:3px;">个</span></div>
-              <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3);" class="i18n"
+              <div style="font-family: var(--sans); font-size: 11.5px; font-weight: 500; letter-spacing: 0.01em; color: var(--text-2);" class="i18n"
                    data-zh="脑波传感点" data-en="EEG channels">脑波传感点</div>
             </div>
             <div>
-              <div style="font-size: 22px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;">&lt;50<span style="font-size:14px; color: var(--accent); margin-left:3px;">ms</span></div>
-              <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3);" class="i18n"
+              <div style="font-size: 28px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;">&lt;50<span style="font-size:14px; color: var(--accent); margin-left:3px;">ms</span></div>
+              <div style="font-family: var(--sans); font-size: 11.5px; font-weight: 500; letter-spacing: 0.01em; color: var(--text-2);" class="i18n"
                    data-zh="信号链路延迟" data-en="Signal-chain latency">信号链路延迟</div>
             </div>
             <div>
-              <div style="font-size: 22px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;" class="i18n"
+              <div style="font-size: 28px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;" class="i18n"
                    data-zh="0<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>电刺激</span>"
                    data-en="0<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>stim.</span>">0<span style="font-size:14px; color: var(--accent); margin-left:3px;">电刺激</span></div>
-              <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3);" class="i18n"
+              <div style="font-family: var(--sans); font-size: 11.5px; font-weight: 500; letter-spacing: 0.01em; color: var(--text-2);" class="i18n"
                    data-zh="完全被动监测" data-en="Fully passive monitoring">完全被动监测</div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PRIVACY / TRUST ══════════ -->
+<section id="privacy">
+  <div class="inner">
+    <div class="privacy-head">
+      <div class="label r i18n" data-zh="隐私与信任" data-en="Privacy & Trust">隐私与信任</div>
+      <h2 class="r d1 i18n"
+          data-zh="你的脑波，<br><span style=&quot;color:var(--green)&quot;>只属于你</span>"
+          data-en="Your brainwaves<br><span style=&quot;color:var(--green)&quot;>belong only to you</span>">你的脑波，<br><span style="color:var(--green)">只属于你</span></h2>
+      <p class="body-text r d2 i18n" style="margin-top:16px;"
+         data-zh="Somnil 读取的是你最私密的信号。所以从第一天起，隐私就是我们的设计前提，而不是事后补丁。"
+         data-en="Somnil reads your most private signals. So privacy was a design premise from day one — never an afterthought.">Somnil 读取的是你最私密的信号。所以从第一天起，隐私就是我们的设计前提，而不是事后补丁。</p>
+    </div>
+
+    <div class="privacy-grid">
+      <div class="privacy-card r">
+        <div class="privacy-icon">
+          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="14" height="22" rx="3"/><path d="M12 21h4"/></svg>
+        </div>
+        <div class="privacy-title i18n" data-zh="本地处理" data-en="On-device">本地处理</div>
+        <div class="privacy-desc i18n"
+             data-zh="脑波分析在你的手机上本地完成，原始脑电不上传云端。"
+             data-en="Brainwave analysis runs locally on your phone — raw EEG never leaves your device.">脑波分析在你的手机上本地完成，原始脑电不上传云端。</div>
+      </div>
+      <div class="privacy-card r d1">
+        <div class="privacy-icon">
+          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14h4l2-7 4 14 3-10 2 3h5"/></svg>
+        </div>
+        <div class="privacy-title i18n" data-zh="被动只读" data-en="Passive sensing">被动只读</div>
+        <div class="privacy-desc i18n"
+             data-zh="Somnil 只读取脑电信号，绝不向你的大脑施加任何电刺激。"
+             data-en="Somnil only reads signals — it never sends any electrical stimulation to your brain.">Somnil 只读取脑电信号，绝不向你的大脑施加任何电刺激。</div>
+      </div>
+      <div class="privacy-card r d2">
+        <div class="privacy-icon">
+          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h20"/><path d="M10.5 8V5.6a1.6 1.6 0 0 1 1.6-1.6h3.8a1.6 1.6 0 0 1 1.6 1.6V8"/><path d="M6.5 8l1.3 14.4A2 2 0 0 0 9.8 24.2h8.4a2 2 0 0 0 2-1.8L21.5 8"/></svg>
+        </div>
+        <div class="privacy-title i18n" data-zh="你来掌控" data-en="You're in control">你来掌控</div>
+        <div class="privacy-desc i18n"
+             data-zh="你的数据随时可一键删除，我们绝不出售。"
+             data-en="Delete your data anytime, with one tap. We never sell it.">你的数据随时可一键删除，我们绝不出售。</div>
       </div>
     </div>
   </div>
