@@ -882,7 +882,7 @@
     </div>
     <div class="hstat">
       <div class="hstat-v">80<sup>%</sup></div>
-      <div class="hstat-k i18n" data-zh="睡眠分期精度 · 逼近人类技师水平" data-en="Sleep-staging accuracy · near human-expert level">睡眠分期精度 · 逼近人类技师水平</div>
+      <div class="hstat-k i18n" data-zh="睡眠分期精度（公开临床基准）· 逼近人类技师" data-en="Sleep-staging accuracy (public clinical benchmark) · near human-expert">睡眠分期精度（公开临床基准）· 逼近人类技师</div>
     </div>
   </div>
 </section>
@@ -1203,9 +1203,9 @@
           data-zh="读懂你的睡眠，<br><span class=&quot;ac&quot;>精度逼近人类专家。</span>"
           data-en="It reads your sleep<br><span class=&quot;ac&quot;>at near human-expert accuracy.</span>">读懂你的睡眠，<br><span class="ac">精度逼近人类专家。</span></h2>
       <p class="body-text r d2 i18n"
-         data-zh="Somnil 的识别能力，建立在医学界研究睡眠的<strong style=&quot;color:var(--text);font-weight:600;&quot;>三个黄金标准数据集</strong>之上——其中 Dreem 的前额头环数据，<strong style=&quot;color:var(--text);font-weight:600;&quot;>最接近 Somnil 自己的佩戴方式</strong>。我们还特意纳入临床病理睡眠人群（失眠、RBD、周期性肢动），让它不只读得懂健康人的睡眠。"
-         data-en="Somnil's detection is built on <strong style=&quot;color:var(--text);font-weight:600;&quot;>three gold-standard sleep datasets</strong> — including Dreem's forehead-headband data, <strong style=&quot;color:var(--text);font-weight:600;&quot;>the closest match to how Somnil itself is worn</strong>. We also included clinical disordered-sleep populations (insomnia, RBD, periodic limb movement), so it doesn't only understand healthy sleep.">
-        Somnil 的识别能力，建立在医学界研究睡眠的<strong style="color:var(--text);font-weight:600;">三个黄金标准数据集</strong>之上——其中 Dreem 的前额头环数据，<strong style="color:var(--text);font-weight:600;">最接近 Somnil 自己的佩戴方式</strong>。我们还特意纳入临床病理睡眠人群（失眠、RBD、周期性肢动），让它不只读得懂健康人的睡眠。
+         data-zh="Somnil 的识别能力，建立在医学界研究睡眠的<strong style=&quot;color:var(--text);font-weight:600;&quot;>五个黄金标准数据集</strong>之上——其中三个前额头环导联数据集（Dreem / ds006695 / BOAS），<strong style=&quot;color:var(--text);font-weight:600;&quot;>最接近 Somnil 自己的佩戴方式</strong>。我们还特意纳入临床病理睡眠人群（失眠、RBD、周期性肢动），让它不只读得懂健康人的睡眠。"
+         data-en="Somnil's detection is built on <strong style=&quot;color:var(--text);font-weight:600;&quot;>five gold-standard sleep datasets</strong> — including three forehead-headband datasets (Dreem / ds006695 / BOAS),<strong style=&quot;color:var(--text);font-weight:600;&quot;>the closest match to how Somnil itself is worn</strong>. We also included clinical disordered-sleep populations (insomnia, RBD, periodic limb movement), so it doesn't only understand healthy sleep.">
+        Somnil 的识别能力，建立在医学界研究睡眠的<strong style="color:var(--text);font-weight:600;">五个黄金标准数据集</strong>之上——其中三个前额头环导联数据集（Dreem / ds006695 / BOAS），<strong style="color:var(--text);font-weight:600;">最接近 Somnil 自己的佩戴方式</strong>。我们还特意纳入临床病理睡眠人群（失眠、RBD、周期性肢动），让它不只读得懂健康人的睡眠。
       </p>
       <p class="body-text r d3 i18n"
          data-zh="在读懂睡眠结构的基础上，它会留意那些你自己都没察觉的早期信号——抢在你被惊醒之前。"
@@ -1245,25 +1245,43 @@
                 data-zh="Dreem DOD-H<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>前额头环导联</span>"
                 data-en="Dreem DOD-H<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Forehead-headband montage</span>">Dreem DOD-H<br><span style="font-size:11px;color:var(--text-3)">前额头环导联</span></td>
             <td class="i18n"
-                data-zh="~25 夜<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>最接近 Somnil</span>"
-                data-en="~25 nights<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Closest to Somnil</span>">~25 夜<br><span style="font-size:11px;color:var(--text-3)">最接近 Somnil</span></td>
+                data-zh="~25 夜<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>前额头环导联</span>"
+                data-en="~25 nights<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Forehead montage</span>">~25 夜<br><span style="font-size:11px;color:var(--text-3)">前额头环导联</span></td>
             <td class="i18n" data-zh="贴近真实佩戴的前额脑电特征" data-en="Forehead EEG closest to real-world wear">贴近真实佩戴的前额脑电特征</td>
+          </tr>
+          <tr>
+            <td class="i18n"
+                data-zh="ds006695<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>短额极导联 (FP-AFz)</span>"
+                data-en="ds006695<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Short frontopolar (FP-AFz)</span>">ds006695<br><span style="font-size:11px;color:var(--text-3)">短额极导联 (FP-AFz)</span></td>
+            <td class="i18n"
+                data-zh="~16 夜<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>最接近 Somnil 佩戴</span>"
+                data-en="~16 nights<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Closest to Somnil</span>">~16 夜<br><span style="font-size:11px;color:var(--text-3)">最接近 Somnil 佩戴</span></td>
+            <td class="i18n" data-zh="与 Somnil 几乎相同的前额电极位置" data-en="Almost the same forehead placement as Somnil">与 Somnil 几乎相同的前额电极位置</td>
+          </tr>
+          <tr>
+            <td class="i18n"
+                data-zh="ds005555 BOAS<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>前额头带 (AF7/AF8)</span>"
+                data-en="ds005555 BOAS<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>Forehead headband (AF7/AF8)</span>">ds005555 BOAS<br><span style="font-size:11px;color:var(--text-3)">前额头带 (AF7/AF8)</span></td>
+            <td class="i18n"
+                data-zh="127 夜<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>3 专家共识金标</span>"
+                data-en="127 nights<br><span style=&quot;font-size:11px;color:var(--text-3)&quot;>3-expert consensus</span>">127 夜<br><span style="font-size:11px;color:var(--text-3)">3 专家共识金标</span></td>
+            <td class="i18n" data-zh="真实头带佩戴下的大样本睡眠分期" data-en="Large-sample staging under real headband wear">真实头带佩戴下的大样本睡眠分期</td>
           </tr>
         </tbody>
       </table>
 
       <div class="evidence-copy r d4" style="margin-top: 28px;">
         <p class="footnote i18n"
-           data-zh="在三个公开黄金标准数据集（Sleep-EDF / CAP / Dreem DOD-H）上训练，并在完全独立的医院数据集上验证泛化 · 被试级 5 折交叉验证（按人切分，无数据泄漏）"
-           data-en="Trained on three public gold-standard datasets (Sleep-EDF / CAP / Dreem DOD-H) and validated for generalization on a fully held-out hospital dataset · subject-level 5-fold cross-validation (split by person, no leakage)">
-          在三个公开黄金标准数据集（Sleep-EDF / CAP / Dreem DOD-H）上训练，并在完全独立的医院数据集上验证泛化 · 被试级 5 折交叉验证（按人切分，无数据泄漏）
+           data-zh="在五个公开黄金标准数据集（Sleep-EDF / CAP / Dreem DOD-H / ds006695 / BOAS）上训练，并在完全独立的医院数据集上验证泛化 · 被试级 5 折交叉验证（按人切分，无数据泄漏）"
+           data-en="Trained on five public gold-standard datasets (Sleep-EDF / CAP / Dreem DOD-H / ds006695 / BOAS) and validated for generalization on a fully held-out hospital dataset · subject-level 5-fold cross-validation (split by person, no leakage)">
+          在五个公开黄金标准数据集（Sleep-EDF / CAP / Dreem DOD-H / ds006695 / BOAS）上训练，并在完全独立的医院数据集上验证泛化 · 被试级 5 折交叉验证（按人切分，无数据泄漏）
         </p>
       </div>
 
       <div class="r d4" style="margin-top: 22px; border-left: 2px solid var(--accent); padding: 6px 0 6px 18px;">
         <p class="i18n" style="font-size: 14px; color: var(--text-2); line-height: 1.7;"
-           data-zh="<strong style=&quot;color:var(--text);font-weight:600;&quot;>最新进展 ·</strong> Somnil 头环已成功采集到真实脑电。我们正用佩戴者的真实数据微调模型，预计约三个月后推出基于自有数据的版本。"
-           data-en="<strong style=&quot;color:var(--text);font-weight:600;&quot;>Latest ·</strong> The Somnil headband is now recording real EEG. We're fine-tuning on real wearer data — an own-data model is expected in about three months."><strong style="color:var(--text);font-weight:600;">最新进展 ·</strong> Somnil 头环已成功采集到真实脑电。我们正用佩戴者的真实数据微调模型，预计约三个月后推出基于自有数据的版本。</p>
+           data-zh="<strong style=&quot;color:var(--text);font-weight:600;&quot;>最新进展 ·</strong> Somnil 头环已成功采集到真实脑电。我们正用佩戴者的真实数据微调模型；基于自有数据的版本正在研发中。"
+           data-en="<strong style=&quot;color:var(--text);font-weight:600;&quot;>Latest ·</strong> The Somnil headband is now recording real EEG. We're fine-tuning on real wearer data — an own-data model is in active development."><strong style="color:var(--text);font-weight:600;">最新进展 ·</strong> Somnil 头环已成功采集到真实脑电。我们正用佩戴者的真实数据微调模型；基于自有数据的版本正在研发中。</p>
       </div>
     </div>
 
@@ -1273,8 +1291,8 @@
           <div class="auc-row-label i18n" data-zh="睡眠分期精度 · 健康人群" data-en="Sleep-staging accuracy · healthy">睡眠分期精度 · 健康人群</div>
           <div class="auc-val">80<span>%</span></div>
           <div class="auc-sub i18n"
-               data-zh="第三代模型 · 在 Sleep-EDF / CAP / Dreem 三个数据集上训练 · 逼近人类技师一致性（≈82.6%）· 仅单个前额通道"
-               data-en="3rd-generation model · trained on Sleep-EDF / CAP / Dreem · near human inter-scorer agreement (≈82.6%) · single forehead channel">第三代模型 · 在 Sleep-EDF / CAP / Dreem 三个数据集上训练 · 逼近人类技师一致性（≈82.6%）· 仅单个前额通道</div>
+               data-zh="第五代模型 · 在五个公开临床数据集上训练（含 ds006695 / BOAS 前额头环导联）· 逼近人类技师一致性（≈82.6%）· 仅单个前额通道"
+               data-en="5th-generation model · trained on five public clinical datasets (incl. forehead-headband ds006695 / BOAS) · near human inter-scorer agreement (≈82.6%) · single forehead channel">第五代模型 · 在五个公开临床数据集上训练（含 ds006695 / BOAS 前额头环导联）· 逼近人类技师一致性（≈82.6%）· 仅单个前额通道</div>
         </div>
         <div class="auc-duo">
           <div class="auc-mini">
@@ -1302,8 +1320,8 @@
             </div>
             <div>
               <div style="font-size: 28px; font-weight: 700; color: var(--text); line-height:1; margin-bottom: 6px;" class="i18n"
-                   data-zh="8<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>个</span>"
-                   data-en="8<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>ch</span>">8<span style="font-size:14px; color: var(--accent); margin-left:3px;">个</span></div>
+                   data-zh="4<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>个</span>"
+                   data-en="4<span style=&quot;font-size:14px; color: var(--accent); margin-left:3px;&quot;>ch</span>">4<span style="font-size:14px; color: var(--accent); margin-left:3px;">个</span></div>
               <div style="font-family: var(--sans); font-size: 11.5px; font-weight: 500; letter-spacing: 0.01em; color: var(--text-2);" class="i18n"
                    data-zh="脑波传感点" data-en="EEG channels">脑波传感点</div>
             </div>
